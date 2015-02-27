@@ -1,0 +1,18 @@
+<template name="topMenu">
+  <div class="layout-top-menu">
+  
+    <div class="ui inverted menu">
+      <a class="{{activeIf 'landingPage'}} item" href="{{pathFor 'landingPage'}}">
+        <i class="home icon"></i> Home
+      </a>
+      <a class="{{activeIf 'about'}} item" href="{{pathFor 'about'}}">
+        <i class="child icon"></i> About us
+      </a>
+      <a class="{{activeIf 'blogList'}} item" href="{{pathFor 'blogList'}}">
+        <i class="cube icon"></i> Blog
+      </a>
+    </div>
+    
+    {{> yield}}
+  </div>
+</template>

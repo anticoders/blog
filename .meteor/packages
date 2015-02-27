@@ -7,3 +7,5 @@
 meteor-platform
 iron:router
 less
+semantic:ui-css
+anti:fake

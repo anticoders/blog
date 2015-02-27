@@ -1,6 +1,6 @@
 
 Router.configure({
-  defaultLayout: 'empty',
+  layoutTemplate: 'topMenu',
   loadingTemplate: 'loading',
   notFoundTemplate: 'notFound',
 });
@@ -10,10 +10,14 @@ Router.route('/', {
   where : 'client',
 });
 
+Router.route('/about', {
+  name  : 'about',
+  where : 'client',
+});
+
 Router.route('/blog', {
   name  : 'blogList',
   where : 'client',
-
 });
 
 Router.route('/blog/:_id', {
