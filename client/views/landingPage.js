@@ -1,0 +1,3 @@
+Template.landingPage.rendered = function () {
+  
+}

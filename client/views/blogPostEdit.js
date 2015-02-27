@@ -1,0 +1,3 @@
+Template.blogPostEdit.rendered = function () {
+
+}
