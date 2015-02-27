@@ -6,6 +6,9 @@ Template.blogList.helpers({
   listOfRecentPosts: function () {
     return BlogPosts.find({});
   },
+  title: function () {
+    return this.title || '[no title]';
+  },
 });
 
 Template.blogList.events({

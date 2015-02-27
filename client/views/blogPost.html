@@ -2,8 +2,9 @@
   {{#if $app.canEdit}}
     <a class="ui primary button" href="{{pathFor 'blogPostEdit'}}">edit this post</a>
   {{/if}}
-  <h1>{{title}} <small>{{createdAt}}</small></h1>
+  <h1>{{title}}</h1>
   {{#each chunks}}
     <p>{{content}}</p>
   {{/each}}
+  <small>{{createdAt}}</small>
 </template>

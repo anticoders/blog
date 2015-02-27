@@ -1,5 +1,6 @@
 <template name="blogPostEdit">
-  <h1>Blog post edit.</h1>
+  <a class="ui primary button" href="{{pathFor 'blogPost'}}">view this post</a>
+  <h1>Editing: {{title}}</h1>
   {{#each $helpers.enumerated chunks}}
     {{> chunkEditor}}
   {{/each}}

@@ -4,7 +4,7 @@
     <button class="ui primary button" data-action="create">create new</button>
   {{/if}}
   {{#each listOfRecentPosts}}
-    <h2><a href="{{pathFor 'blogPost'}}">An example blog post</a></h2>
+    <h2><a href="{{pathFor 'blogPost'}}">{{title}}</a></h2>
     <p>{{chunks.[0].content}}</p>
   {{/each}}
 </template>
