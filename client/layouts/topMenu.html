@@ -14,8 +14,10 @@
       <a class="{{activeIf 'login'}} item" href="{{pathFor 'login'}}">
         <i class="sign in icon"></i> Login
       </a>
+      <span class="item">
+        {{hint}}
+      </span>
     </div>
-
     {{> yield}}
   </div>
 </template>

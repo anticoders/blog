@@ -23,14 +23,40 @@ Router.route('/about', {
 Router.route('/blog', {
   name  : 'blogList',
   where : 'client',
+
+  waitOn: function () {
+    return Meteor.subscribe('blogPosts');
+  }
 });
 
 Router.route('/blog/:_id', {
   name  : 'blogPost',
   where : 'client',
+
+  waitOn: function () {
+    return Meteor.subscribe('blogPosts');
+  },
+
+  data: function () {
+    return BlogPosts.findOne({ _id: this.params._id });
+  },
+
 });
 
 Router.route('/edit/:_id', {
-  name  : 'blogPostEdit',
-  where : 'client',
+  name   : 'blogPostEdit',
+  where  : 'client',
+  
+  waitOn: function () {
+    return Meteor.subscribe('blogPosts');
+  },
+
+  onBeforeAction: function () {
+    this.hint = new ReactiveVar("");
+    this.next();
+  },
+
+  data: function () {
+    return BlogPosts.findOne({ _id: this.params._id });
+  },
 });
