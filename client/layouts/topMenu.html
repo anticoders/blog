@@ -11,8 +11,11 @@
       <a class="{{activeIf 'blogList'}} item" href="{{pathFor 'blogList'}}">
         <i class="cube icon"></i> Blog
       </a>
+      <a class="{{activeIf 'login'}} item" href="{{pathFor 'login'}}">
+        <i class="sign in icon"></i> Login
+      </a>
     </div>
-    
+
     {{> yield}}
   </div>
 </template>

@@ -10,6 +10,11 @@ Router.route('/', {
   where : 'client',
 });
 
+Router.route('/login', {
+  name  : 'login',
+  where : 'client',
+});
+
 Router.route('/about', {
   name  : 'about',
   where : 'client',

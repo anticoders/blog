@@ -9,3 +9,6 @@ iron:router
 less
 semantic:ui-css
 anti:fake
+accounts-base
+accounts-password
+useraccounts:semantic-ui
