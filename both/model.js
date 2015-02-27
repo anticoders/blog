@@ -8,6 +8,7 @@ var aChunk = {
 
 BlogPosts.pattern = {
   '_id'       : String,
+  'title'     : String,
   'createdAt' : Date,
   'createdBy' : String,
   'chunks'    : [ aChunk ],
@@ -23,6 +24,8 @@ BlogPosts.create = function (options, done) {
   }
   return BlogPosts.insert({
     
+    title     : Fake.sentence(8),
+
     createdAt : moment().toDate(),
     createdBy : createdBy,
     chunks    : [
