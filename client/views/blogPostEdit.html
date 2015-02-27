@@ -1,3 +1,6 @@
 <template name="blogPostEdit">
-  Blog post edit.
+  <h1>Blog post edit.</h1>
+  {{#each $helpers.enumerated chunks}}
+    {{> chunkEditor}}
+  {{/each}}
 </template>
