@@ -1,8 +1,8 @@
 <template name="topMenu">
-  <div class="layout-top-menu">
-    {{#backstretch image='http://lorempixel.com/800/600/abstract/1'}}
-      <div class="banner"></div>
-    {{/backstretch}}
+  {{#backstretch image='http://lorempixel.com/800/600/abstract/7'}}
+    <div class="banner {{activeIf 'landingPage'}}"></div>
+  {{/backstretch}}
+  <div class="layout-top-menu-navbar">  
     <div class="ui inverted menu">
       <a class="{{activeIf 'landingPage'}} item" href="{{pathFor 'landingPage'}}">
         <i class="home icon"></i> Home
@@ -20,6 +20,8 @@
         {{hint}}
       </span>
     </div>
+  </div>
+  <div class="layout-top-menu-content">
     {{> yield}}
   </div>
 </template>

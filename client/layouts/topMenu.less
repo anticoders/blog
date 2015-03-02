@@ -1,11 +1,26 @@
-.layout-top-menu {
+.layout-top-menu-content {
   padding-left: 10%;
   padding-right: 10%;
   padding-bottom: 10em;
 }
 
+.layout-top-menu-navbar {
+  background: #1b1c1d;
+}
+
+.layout-top-menu-navbar > .menu {
+  margin-left:  10%;
+  margin-right: 10%;
+}
+
 .banner {
   padding: 0;
   margin: 0;
+  overflow: hidden;
+
+  transition: padding 0.2s ease;
+}
+
+.banner.active {
   padding-top: 400px;
 }
