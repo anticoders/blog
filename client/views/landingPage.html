@@ -1,6 +1,32 @@
+
 <template name="landingPage">
   <h1>This is our landing page.</h1>
+
   <p>{{lorem}}</p>
+
+  <div class="ui hidden divider"></div>
+
+  <div class="ui doubling three columns grid">
+    <div class="column">
+      {{> feature}}
+    </div>
+    <div class="column">
+      {{> feature}}
+    </div>
+    <div class="column">
+      {{> feature}}
+    </div>
+  </div>
+
+  <div class="ui divider"></div>
+
   <p>{{lorem}}</p>
+
+  <div class="ui hidden divider"></div>
+
   <p>{{lorem}}</p>
+
+  {{#contentFor 'banner'}}
+    
+  {{/contentFor}}
 </template>
