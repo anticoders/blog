@@ -34,4 +34,4 @@ BlogPosts.create = function (options, done) {
     ],
 
   }, done);
-}
+};

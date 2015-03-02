@@ -4,7 +4,9 @@
   {{/if}}
   <h1>{{title}}</h1>
   {{#each chunks}}
-    <p>{{content}}</p>
+    <p>
+      {{#markdown}}{{content}}{{/markdown}}
+    </p>
   {{/each}}
   <small>{{createdAt}}</small>
 </template>
