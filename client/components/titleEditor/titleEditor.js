@@ -5,7 +5,7 @@ var doUpdate = _.debounce(function (postId, updates, done) {
 Template.titleEditor.rendered = function () {
   //we need to non-reactively add title to prevent updating DOM content during editing
   var staticTitle = this.data.title;
-  this.$('.title-edit').text(staticTitle);
+  this.$('.title-edit').html(staticTitle);
 };
 
 Template.titleEditor.events({
@@ -19,7 +19,7 @@ Template.titleEditor.events({
     if (controller && controller.hint) {
       controller.hint.set('saving ...');
     }
-    updates['title'] = $(e.target).text();
+    updates['title'] = $(e.target).html();
     doUpdate(blogPost._id, updates, function () {
       if (controller && controller.hint) {
         controller.hint.set('saving done!');
