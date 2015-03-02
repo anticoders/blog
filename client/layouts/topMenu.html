@@ -1,6 +1,8 @@
 <template name="topMenu">
   <div class="layout-top-menu">
-  
+    {{#backstretch image='http://lorempixel.com/800/600/abstract/1'}}
+      <div class="banner"></div>
+    {{/backstretch}}
     <div class="ui inverted menu">
       <a class="{{activeIf 'landingPage'}} item" href="{{pathFor 'landingPage'}}">
         <i class="home icon"></i> Home
