@@ -5,6 +5,6 @@
   {{/if}}
   {{#each listOfRecentPosts}}
     <h2><a href="{{pathFor 'blogPost'}}">{{title}}</a></h2>
-    <p>{{chunks.[0].content}}</p>
+    <p>{{#markdown}}{{chunks.[0].content}}{{/markdown}}</p>
   {{/each}}
 </template>
