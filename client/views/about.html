@@ -6,6 +6,28 @@
   {{> breadcrumb items=$helpers.breadcrumb}}
 
   <p>{{lorem}}</p>
-  <p>{{lorem}}</p>
-  <p>{{lorem}}</p>
+
+  <div class="ui items">
+    {{#each members}}
+      {{#Layout template='bio'}}
+
+        {{#contentFor 'header'}}
+          {{name}}
+        {{/contentFor}}
+
+        {{#contentFor 'meta'}}
+          {{motto}}
+        {{/contentFor}}
+
+        {{#contentFor 'image'}}
+          <img src="http://lorempixel.com/200/200/people/{{index}}">
+        {{/contentFor}}
+
+    {{#markdown}}{{bio}}{{/markdown}}
+
+      {{/Layout}}
+
+      <div class="ui hidden divider"></div>
+    {{/each}}
+  </div>
 </template>
