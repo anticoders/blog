@@ -1,5 +1,5 @@
-<template name="topMenu">
-  <div class="layout-top-menu-header">
+<template name="master">
+  <div class="master layout header">
 
     {{#backstretch images=images fade=1000}}
       <div class="banner {{activeIf 'landingPage'}}">
@@ -25,7 +25,7 @@
     {{#backstretch image='https://s3-us-west-2.amazonaws.com/anticoders/assets/images/keyboard.jpg'}}
       <div class="header {{activeUnless 'landingPage'}}">
         <div class="overlay">
-          <div class="layout-top-meny-header-content">
+          <div class="content">
             {{> yield 'header'}}
           </div>
         </div>
@@ -34,11 +34,11 @@
 
   </div>
 
-  <div class="layout-top-menu-content">
+  <div class="master layout content">
     {{> yield}}
   </div>
 
-  <div class="layout-top-menu-footer">
+  <div class="master layout footer">
     <div class="ui grid">
       <div class="four wide column">
         <ul>
@@ -71,7 +71,7 @@
     </div>
   </div>
 
-  <div class="layout-top-menu-copyright">
+  <div class="master layout copyright">
     Copyright {{year}} Anticoders
   </div>
 </template>

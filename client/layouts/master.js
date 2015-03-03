@@ -1,11 +1,11 @@
 
-Template.topMenu.created = function () {
+Template.master.created = function () {
 
 };
 
-Template.topMenu.rendered = function () {
+Template.master.rendered = function () {
 
-  var container = this.$('.layout-top-menu-content')[0];
+  var container = this.$('.master.layout.content')[0];
 
   container._uihooks = {
     insertElement: function (node, next) {
@@ -42,7 +42,7 @@ Template.topMenu.rendered = function () {
 
 };
 
-Template.topMenu.helpers({
+Template.master.helpers({
   activeIf: function (name) {
     return Helpers.routeIs(name) ? 'active' : '';
   },

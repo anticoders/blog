@@ -1,6 +1,6 @@
 
 Router.configure({
-  layoutTemplate: 'topMenu',
+  layoutTemplate: 'master',
   loadingTemplate: 'loading',
   notFoundTemplate: 'notFound',
 });
