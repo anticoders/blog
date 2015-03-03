@@ -1,4 +1,13 @@
 .chunkEditor {
+  position: relative;
+
+  .sort-chunk {
+    position: absolute;
+    right: 100%;
+    opacity: 0;
+
+  }
+
   textarea {
     width: 100%;
     height: 10em;
@@ -8,5 +17,16 @@
   //default font family for non code editor
   .cm-m-null {
     font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  }
+
+  &:hover {
+
+    .sort-chunk {
+      opacity: 0.9;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
 }

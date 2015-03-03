@@ -1,5 +1,8 @@
 <template name="chunkEditor">
-  <div class="chunkEditor">
+  <div class="chunkEditor chunk-type-{{type}}">
+    <div class="ui compact icon button sort-chunk">
+      <i class="move icon"></i>
+    </div>
     <textarea>{{content}}</textarea>
   </div>
 </template>

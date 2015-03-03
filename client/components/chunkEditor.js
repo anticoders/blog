@@ -1,14 +1,8 @@
 Template.chunkEditor.rendered = function() {
   var that = this;
+  var chunkType = this.data && this.data.type || 'text';
 
-  this.editorCodeMirror = CodeMirror.fromTextArea(this.find('textarea'),
-    {
-      mode: 'null',
-      theme: 'default', //default, ambiance
-      lineWrapping: true,
-      lineNumbers: false,
-      addModeClass: true
-    });
+  this.editorCodeMirror = CodeMirror.fromTextArea(this.find('textarea'),initMode(chunkType));
 };
 
 var doUpdate = _.debounce(function (postId, updates, done) {
@@ -62,6 +56,9 @@ Template.chunkEditor.events({
     e.preventDefault();
     return false;
   },
+  'click .sort-chunk': function(e, t){
+
+  }
 });
 
 var uploadImages = function (event, callback) {
@@ -110,3 +107,19 @@ var addPlaceholders = function (event, postId, chunk, content) {
   return listOfIds;
 };
 
+function initMode(type) {
+  if (type === 'text') return {
+    mode: 'null',
+    theme: 'default', //default, ambiance
+    lineWrapping: true,
+    lineNumbers: false,
+    addModeClass: true
+  };
+  else return {
+    mode: 'javascript',
+    theme: 'ambiance', //default, ambiance
+    lineWrapping: false,
+    lineNumbers: true,
+    addModeClass: false
+  };
+}
