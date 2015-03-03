@@ -1,5 +1,6 @@
 Template.landingPage.rendered = function () {
-  
+  this.$('.landing.page.section').hide();
+  this.$('.landing.page.section').transition('slide left', 500).transition('jiggle', 500);
 }
 
 Template.landingPage.helpers({
