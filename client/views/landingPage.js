@@ -1,6 +1,6 @@
 Template.landingPage.rendered = function () {
-
-}
+  
+};
 
 Template.landingPage.helpers({
   lorem: function () {

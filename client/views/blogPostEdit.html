@@ -2,7 +2,9 @@
   {{> breadcrumb items=$helpers.breadcrumb}}
 
   {{> titleEditor}}
-  {{#each $helpers.enumerated chunks}}
-    {{> chunkEditor}}
-  {{/each}}
+  <div class="chunks-container">
+    {{#each $helpers.enumerated chunks}}
+      {{> chunkEditor}}
+    {{/each}}
+  </div>
 </template>

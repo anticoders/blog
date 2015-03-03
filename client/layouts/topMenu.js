@@ -1,7 +1,7 @@
 
 Template.topMenu.created = function () {
 
-}
+};
 
 Template.topMenu.rendered = function () {
 
@@ -40,7 +40,7 @@ Template.topMenu.rendered = function () {
     },
   }
 
-}
+};
 
 Template.topMenu.helpers({
   activeIf: function (name) {

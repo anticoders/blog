@@ -1,3 +1,12 @@
+Template.chunkEditor.rendered = function() {
+  var that = this;
+  var staticContent = this.data.content;
+  this.$('textarea').val(staticContent);
+  var chunkType = this.data && this.data.type || 'text';
+
+  this.editorCodeMirror = CodeMirror.fromTextArea(this.find('textarea'),initMode(chunkType));
+  window.qweqwe = this.editorCodeMirror;
+};
 
 var doUpdate = _.debounce(function (postId, updates, done) {
   BlogPosts.update({ _id: postId }, { $set: updates }, done);
@@ -8,6 +17,7 @@ Template.chunkEditor.events({
     var controller = Iron.controller();
     var updates = {};
     var blogPost = Template.parentData();
+    console.log(this.index);
     if (this.index === undefined) {
       throw new Meteor.Error('chunk without an index may not be edited');
     }
@@ -17,7 +27,7 @@ Template.chunkEditor.events({
     if (controller && controller.hint) {
       controller.hint.set('saving ...');
     }
-    updates['chunks.' + this.index + '.content'] = t.$('textarea').val();
+    updates['chunks.' + this.index + '.content'] = t.editorCodeMirror.getValue();
     doUpdate(blogPost._id, updates, function () {
       if (controller && controller.hint) {
         controller.hint.set('saving done!');
@@ -50,6 +60,9 @@ Template.chunkEditor.events({
     e.preventDefault();
     return false;
   },
+  'click .sort-chunk': function(e, t){
+
+  }
 });
 
 var uploadImages = function (event, callback) {
@@ -74,10 +87,10 @@ var uploadImages = function (event, callback) {
           callback && callback(listOfResults);
         }
       });
-    }
+    };
     reader.readAsBinaryString(file);
   });
-}
+};
 
 var addPlaceholders = function (event, postId, chunk, content) {
   var dt = event.dataTransfer;
@@ -96,5 +109,21 @@ var addPlaceholders = function (event, postId, chunk, content) {
   }).join('\n');
   BlogPosts.update({ _id: postId }, { $set: updates });
   return listOfIds;
-}
+};
 
+function initMode(type) {
+  if (type === 'text') return {
+    mode: 'null',
+    theme: 'default', //default, ambiance
+    lineWrapping: true,
+    lineNumbers: false,
+    addModeClass: true
+  };
+  else return {
+    mode: 'javascript',
+    theme: 'ambiance', //default, ambiance
+    lineWrapping: false,
+    lineNumbers: true,
+    addModeClass: false
+  };
+}
