@@ -5,10 +5,15 @@
       <img src="http://lorempixel.com/200/200/people">
     </div>
     <h1>{{title}}</h1>
-    {{#if $app.canEdit}}
-      <a class="ui primary button" href="{{pathFor 'blogPostEdit'}}">edit this post</a>
-    {{/if}}
+    <p>{{summary}}</p>
   {{/contentFor}}
+
+  {{#breadcrumb items=$helpers.breadcrumb}}
+    {{#if $app.canEdit}}
+      <i class="right chevron icon divider"></i>
+      <a class="section" href="{{pathFor 'blogPostEdit'}}">edit</a>
+    {{/if}}
+  {{/breadcrumb}}
 
   {{#each chunks}}
     <p>

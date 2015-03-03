@@ -1,0 +1,12 @@
+<template name="breadcrumb">
+  <div class="ui large breadcrumb">
+    {{#each initial}}
+      <a class="section" href="{{link}}">{{title}}</a>
+      <i class="right chevron icon divider"></i>
+    {{/each}}
+    {{#with last}}
+      <div class="active section">{{title}}</div>
+    {{/with}}
+    {{> UI.contentBlock}}
+  </div>
+</template>

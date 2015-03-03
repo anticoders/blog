@@ -1,10 +1,14 @@
 <template name="blogList">
   {{#contentFor 'header'}}
     <h1>List of all blog posts.</h1>
-    {{#if $app.canEdit}} 
-      <button class="ui primary button" data-action="create">create new</button>
-    {{/if}}
   {{/contentFor}}
+
+  {{#breadcrumb items=$helpers.breadcrumb}}
+    {{#if $app.canEdit}}
+      <i class="right chevron icon divider"></i>
+      <a class="section" href="#" data-action='create'>create new</a>
+    {{/if}}
+  {{/breadcrumb}}
 
   <div class="ui items">
     {{#each listOfRecentPosts}}
@@ -18,14 +22,16 @@
           <span class="date">{{createdAt}}</span>
         </div>
         <div class="description">
-          {{#markdown}}{{chunks.[0].content}}{{/markdown}}
+          {{#markdown}}{{summary}}{{/markdown}}
         </div>
         <div class="extra">
-          <div class="ui horizontal label">IMAX</div>
-          <div class="ui horizontal label"><i class="globe icon"></i> Additional Languages</div>
+          {{#each tags}}
+            <div class="ui horizontal label"><i class="tag icon"></i> {{this}}</div>
+          {{/each}}
         </div>
       </div>
     </div>
+    <div class="ui divider"></div>
     {{/each}}
   </div>
 </template>

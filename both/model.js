@@ -11,7 +11,9 @@ BlogPosts.pattern = {
   'title'     : String,
   'createdAt' : Date,
   'createdBy' : String,
+  'summary'   : String,
   'chunks'    : [ aChunk ],
+  'tags'      : [ String ],
 };
 
 BlogPosts.create = function (options, done) {
@@ -25,12 +27,13 @@ BlogPosts.create = function (options, done) {
   return BlogPosts.insert({
     
     title     : Fake.sentence(8),
-
     createdAt : moment().toDate(),
     createdBy : createdBy,
+    summary   : Fake.paragraph(8),
+    tags      : [ Fake.word(8), Fake.word(4), Fake.word(4) ],
     chunks    : [
-      { type: 'text', content: Fake.paragraph(20) },
-      { type: 'text', content: Fake.paragraph(20) },
+      { type: 'text', content: Fake.paragraph(16) },
+      { type: 'text', content: Fake.paragraph(16) },
     ],
 
   }, done);
