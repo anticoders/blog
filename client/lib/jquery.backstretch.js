@@ -195,8 +195,6 @@
             , bgHeight = bgWidth / this.$img.data('ratio')
             , bgOffset;
 
-            console.log(bgCSS, bgHeight, rootHeight);
-
             // Make adjustments based on image ratio
             if (bgHeight >= rootHeight) {
                 bgOffset = (bgHeight - rootHeight) / 2;

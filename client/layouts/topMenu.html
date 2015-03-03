@@ -25,7 +25,9 @@
     {{#backstretch image='https://s3-us-west-2.amazonaws.com/anticoders/assets/images/wood.jpg'}}
       <div class="header {{activeUnless 'landingPage'}}">
         <div class="overlay">
-          {{> yield 'header'}}
+          <div class="layout-top-meny-header-content">
+            {{> yield 'header'}}
+          </div>
         </div>
       </div>
     {{/backstretch}}
@@ -35,6 +37,8 @@
   <div class="layout-top-menu-content">
     {{> yield}}
   </div>
+
+  {{> sidebar}}
 
   <div class="layout-top-menu-footer">
     <div class="ui grid">
