@@ -18,7 +18,7 @@
           <span class="date">{{createdAt}}</span>
         </div>
         <div class="description">
-          {{chunks.[0].content}}
+          {{#markdown}}{{chunks.[0].content}}{{/markdown}}
         </div>
         <div class="extra">
           <div class="ui horizontal label">IMAX</div>
