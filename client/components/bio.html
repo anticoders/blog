@@ -1,0 +1,18 @@
+<template name="bio">
+  <div class="item">
+    <div class="image">
+      {{> yield 'image'}}
+    </div>
+    <div class="content">
+      <span class="header" href="{{pathFor 'blogPost'}}">
+        {{> yield 'header'}}
+      </span>
+      <div class="meta">
+        {{> yield 'meta'}}
+      </div>
+      <div class="description">
+        {{> yield}}
+      </div>
+    </div>
+  </div>
+</template>
