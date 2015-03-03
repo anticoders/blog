@@ -1,5 +1,5 @@
 Template.blogPostEdit.created = function () {
-  this.$lastFocused = null; //stores reference to last focused chunk input
+
 };
 
 Template.blogPostEdit.rendered = function () {
@@ -15,7 +15,9 @@ Template.blogPostEdit.rendered = function () {
     },
     stop: function(e, ui) {
       var indexAfterSort = ui.item.index();
-      var chunkArray = that.data.chunks;
+      var sortedData = Blaze.getData( ui.item.get(0) );
+      var chunkArray = BlogPosts.findOne({_id: that.data._id}, {reactive: false}).chunks;
+      console.log(chunkArray, sortedData);
       Helpers.moveInArray(chunkArray, that.indexBeforeSort, indexAfterSort); //move element at new index in-place
       BlogPosts.update({ _id: that.data._id }, { $set: { chunks: chunkArray } });
     }

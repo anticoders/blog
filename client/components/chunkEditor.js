@@ -1,8 +1,11 @@
 Template.chunkEditor.rendered = function() {
   var that = this;
+  var staticContent = this.data.content;
+  this.$('textarea').val(staticContent);
   var chunkType = this.data && this.data.type || 'text';
 
   this.editorCodeMirror = CodeMirror.fromTextArea(this.find('textarea'),initMode(chunkType));
+  window.qweqwe = this.editorCodeMirror;
 };
 
 var doUpdate = _.debounce(function (postId, updates, done) {
@@ -14,6 +17,7 @@ Template.chunkEditor.events({
     var controller = Iron.controller();
     var updates = {};
     var blogPost = Template.parentData();
+    console.log(this.index);
     if (this.index === undefined) {
       throw new Meteor.Error('chunk without an index may not be edited');
     }
