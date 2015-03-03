@@ -1,3 +1,15 @@
+Template.chunkEditor.rendered = function() {
+  var that = this;
+
+  this.editorCodeMirror = CodeMirror.fromTextArea(this.find('textarea'),
+    {
+      mode: 'null',
+      theme: 'default', //default, ambiance
+      lineWrapping: true,
+      lineNumbers: false,
+      addModeClass: true
+    });
+};
 
 var doUpdate = _.debounce(function (postId, updates, done) {
   BlogPosts.update({ _id: postId }, { $set: updates }, done);
@@ -17,7 +29,7 @@ Template.chunkEditor.events({
     if (controller && controller.hint) {
       controller.hint.set('saving ...');
     }
-    updates['chunks.' + this.index + '.content'] = t.$('textarea').val();
+    updates['chunks.' + this.index + '.content'] = t.editorCodeMirror.getValue();
     doUpdate(blogPost._id, updates, function () {
       if (controller && controller.hint) {
         controller.hint.set('saving done!');
@@ -74,10 +86,10 @@ var uploadImages = function (event, callback) {
           callback && callback(listOfResults);
         }
       });
-    }
+    };
     reader.readAsBinaryString(file);
   });
-}
+};
 
 var addPlaceholders = function (event, postId, chunk, content) {
   var dt = event.dataTransfer;
@@ -96,5 +108,5 @@ var addPlaceholders = function (event, postId, chunk, content) {
   }).join('\n');
   BlogPosts.update({ _id: postId }, { $set: updates });
   return listOfIds;
-}
+};
 

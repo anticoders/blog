@@ -1,7 +1,7 @@
 
 Template.topMenu.rendered = function () {
 
-}
+};
 
 Template.topMenu.helpers({
   activeIf: function (name) {
