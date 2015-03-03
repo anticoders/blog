@@ -22,14 +22,16 @@
           <span class="date">{{createdAt}}</span>
         </div>
         <div class="description">
-          {{#markdown}}{{chunks.[0].content}}{{/markdown}}
+          {{#markdown}}{{summary}}{{/markdown}}
         </div>
         <div class="extra">
-          <div class="ui horizontal label">IMAX</div>
-          <div class="ui horizontal label"><i class="globe icon"></i> Additional Languages</div>
+          {{#each tags}}
+            <div class="ui horizontal label"><i class="tag icon"></i> {{this}}</div>
+          {{/each}}
         </div>
       </div>
     </div>
+    <div class="ui divider"></div>
     {{/each}}
   </div>
 </template>
