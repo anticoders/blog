@@ -25,6 +25,9 @@ Template.blogList.events({
       }
       Router.go('blogPostEdit', { _id: postId });
     });
+  },
+  'click [data-action=scrollTop]': function () {
+    $('body').scrollTop(0);
   }
 });
 
