@@ -1,9 +1,13 @@
 <template name="topMenu">
-  {{#backstretch image='http://lorempixel.com/800/600/abstract/7'}}
-    <div class="banner {{activeIf 'landingPage'}}"></div>
-  {{/backstretch}}
-  <div class="layout-top-menu-navbar">  
-    <div class="ui inverted menu">
+  <div class="layout-top-menu-header">
+
+    {{#backstretch image='https://s3-us-west-2.amazonaws.com/anticoders/assets/images/country.jpg'}}
+      <div class="banner {{activeIf 'landingPage'}}">
+        {{> yield 'banner'}}
+      </div>
+    {{/backstretch}}
+
+    <div class="ui fluid five item inverted menu">
       <a class="{{activeIf 'landingPage'}} item" href="{{pathFor 'landingPage'}}">
         <i class="home icon"></i> Home
       </a>
@@ -16,12 +20,60 @@
       <a class="{{activeIf 'login'}} item" href="{{pathFor 'login'}}">
         <i class="sign in icon"></i> Login
       </a>
-      <span class="item">
-        {{hint}}
-      </span>
     </div>
+
+    {{#backstretch image='https://s3-us-west-2.amazonaws.com/anticoders/assets/images/wood.jpg'}}
+      <div class="header {{activeUnless 'landingPage'}}">
+        <div class="overlay">
+          <div class="layout-top-meny-header-content">
+            {{> yield 'header'}}
+          </div>
+        </div>
+      </div>
+    {{/backstretch}}
+
   </div>
+
   <div class="layout-top-menu-content">
     {{> yield}}
+  </div>
+
+  {{> sidebar}}
+
+  <div class="layout-top-menu-footer">
+    <div class="ui grid">
+      <div class="four wide column">
+        <ul>
+          <li>item 1</li>
+          <li>item 2</li>
+          <li>item 3</li>
+        </ul>
+      </div>
+      <div class="four wide column">
+        <ul>
+          <li>item 1</li>
+          <li>item 2</li>
+          <li>item 3</li>
+        </ul>
+      </div>
+      <div class="four wide column">
+        <ul>
+          <li>item 1</li>
+          <li>item 2</li>
+          <li>item 3</li>
+        </ul>
+      </div>
+      <div class="four wide column">
+        <ul>
+          <li>item 1</li>
+          <li>item 2</li>
+          <li>item 3</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout-top-menu-copyright">
+    Copyright {{year}} Anticoders
   </div>
 </template>
