@@ -1,11 +1,6 @@
 <template name="blogPostEdit">
   <a class="ui primary button" href="{{pathFor 'blogPost'}}">view this post</a>
   {{> titleEditor}}
-  <div class="ui icon buttons right floated">
-    <div class="ui button icon-bold"><i class="bold icon"></i></div>
-    <div class="ui button icon-italic"><i class="italic icon"></i></div>
-    <div class="ui button icon-ulist"><i class="unordered list icon"></i></div>
-  </div>
   {{#each $helpers.enumerated chunks}}
     {{> chunkEditor}}
   {{/each}}
