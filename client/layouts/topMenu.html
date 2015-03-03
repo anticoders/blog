@@ -1,7 +1,7 @@
 <template name="topMenu">
   <div class="layout-top-menu-header">
 
-    {{#backstretch image='https://s3-us-west-2.amazonaws.com/anticoders/assets/images/country.jpg'}}
+    {{#backstretch images=images fade=1000}}
       <div class="banner {{activeIf 'landingPage'}}">
         {{> yield 'banner'}}
       </div>
@@ -22,7 +22,7 @@
       </a>
     </div>
 
-    {{#backstretch image='https://s3-us-west-2.amazonaws.com/anticoders/assets/images/wood.jpg'}}
+    {{#backstretch image='https://s3-us-west-2.amazonaws.com/anticoders/assets/images/keyboard.jpg'}}
       <div class="header {{activeUnless 'landingPage'}}">
         <div class="overlay">
           <div class="layout-top-meny-header-content">
