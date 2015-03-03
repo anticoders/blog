@@ -10,6 +10,13 @@
     {{/if}}
   {{/contentFor}}
 
+  {{#breadcrumb items=$helpers.breadcrumb}}
+    {{#if $app.canEdit}}
+      <i class="right chevron icon divider"></i>
+      <a class="section" href="{{pathFor 'blogPostEdit'}}">edit this post</a>
+    {{/if}}
+  {{/breadcrumb}}
+
   {{#each chunks}}
     <p>
       {{#markdown}}{{content}}{{/markdown}}

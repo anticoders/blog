@@ -9,6 +9,10 @@ Helpers.enumerated = function (listOfObjects) {
   });
 };
 
+Helpers.breadcrumb = function () {
+  return Iron.controller().breadcrumb;
+};
+
 Template.registerHelper('$helpers', function () {
   return Helpers;
 });

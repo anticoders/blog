@@ -13,6 +13,7 @@ Template.blogList.helpers({
 
 Template.blogList.events({
   'click [data-action=create]': function () {
+    console.log('creating post');
     BlogPosts.create({
       createdBy: 'someFakeUser',
     }, function (err, postId) {
