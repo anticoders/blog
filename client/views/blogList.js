@@ -9,6 +9,9 @@ Template.blogList.helpers({
   title: function () {
     return this.title || '[no title]';
   },
+  summary: function () {
+    return this.summary || brief(this.chunks[0].content, 512);
+  },
 });
 
 Template.blogList.events({
@@ -24,3 +27,15 @@ Template.blogList.events({
     });
   }
 });
+
+function brief(text, length) {
+  var brief = "";
+  text = text.split(' ');
+  while (text.length > 0 && brief.length < length) {
+    brief += ' ' + text.shift();
+  }
+  if (text.length > 0) {
+    brief += ' ...';
+  }
+  return brief;
+}
