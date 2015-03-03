@@ -1,4 +1,8 @@
 
+Template.backstretch.created = function () {
+  this.$index = new ReactiveVar(0);
+}
+
 Template.backstretch.rendered = function () {
 
   var self = this;
@@ -8,19 +12,17 @@ Template.backstretch.rendered = function () {
 
   if (typeof self.data === 'object' && !self.data.images && !self.data.image) return;
 
-  /*require('spinner', function (Spinner) {
-    self.spinner = new Spinner({
-      width: 5,
-      lines: 10,
-      color: "#aaa",
-    }).spin($node[0]);
-  });*/
+  self.$spinner = $('<div class="ui active dimmer"><div class="ui loader"></div></div>');
+
+  $node.append(self.$spinner);
 
   if (typeof self.data === 'string') {
     $node.backstretch(self.data);
   } else if (typeof self.data === 'object') {
     $node.backstretch(self.data.images || self.data.image, self.data);
   }
+
+  self.$backstretch = $node.data('backstretch');
 
   self.resize = function () {
     $node.backstretch('resize');
@@ -35,6 +37,15 @@ Template.backstretch.destroyed = function () {
 
 Template.backstretch.events({
   'backstretch.show div': function (e, t) {
-    t.spinner && t.spinner.stop();
-  }
+    if (t.$spinner) {
+      t.$spinner.transition('fade out', 500);
+      Meteor.setTimeout(function () {
+        t.$spinner.remove();
+        t.$spinner = null;
+      }, 500);
+    }
+  },
+  'backstretch.before': function (e, t, instance, index) {
+    t.$index.set(index);
+  },
 });
