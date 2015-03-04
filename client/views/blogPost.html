@@ -1,11 +1,11 @@
 <template name="blogPost">
 
   {{#contentFor 'header'}}
-    <div class="ui circular small left floated image">
+    <div class="ui circular small left floated image animated bounceInUp">
       <img src="http://lorempixel.com/200/200/people">
     </div>
-    <h1>{{title}}</h1>
-    <p>{{summary}}</p>
+    <h1 class="animated bounceInDown">{{title}}</h1>
+    <p class="animated bounceInRight">{{summary}}</p>
   {{/contentFor}}
 
   {{#breadcrumb items=$helpers.breadcrumb}}

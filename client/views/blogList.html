@@ -12,7 +12,7 @@
 
   <div class="ui items">
     {{#each listOfRecentPosts}}
-    <div class="item">
+    <div class="blog item">
       <div class="image">
         <img src="http://lorempixel.com/200/200/people">
       </div>
@@ -28,6 +28,7 @@
           {{#each tags}}
             <div class="ui horizontal label"><i class="tag icon"></i> {{this}}</div>
           {{/each}}
+          <a class="ui right floated small primary compact button" href="{{pathFor 'blogPost'}}" data-action="scrollTop">read more</a>
         </div>
       </div>
     </div>
