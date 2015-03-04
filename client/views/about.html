@@ -1,13 +1,22 @@
 <template name="about">
   {{#contentFor 'header'}}
-    <h1>About us ...</h1>
+    <h1>Who we are?</h1>
   {{/contentFor}}
 
   {{> breadcrumb items=$helpers.breadcrumb}}
 
-  <p>{{lorem}}</p>
+  <div class="ui stackable grid">
+    <div class="ten wide column">
+      <p>{{lorem}}</p>
+    </div>
+    <div class="six wide column">
+      <img class="ui circular large image" src="http://lorempixel.com/200/200/people">
+    </div>
+  </div>
 
-  <div class="ui items">
+  <div class="ui divider"></div>
+
+  <div class="ui bio items">
     {{#each members}}
       {{#Layout template='bio'}}
 
