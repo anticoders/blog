@@ -15,9 +15,9 @@ Template.landingPage.helpers({
       { index: 5 },
     ];
   },
-  spy: function () {
-    console.log(this);
-  }
+  authors: function () {
+    return Meteor.users.find();
+  },
 });
 
 Template.landingPage.events({

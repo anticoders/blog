@@ -20,7 +20,7 @@
       <p>{{lorem}}</p>
       <a class="ui primary button" href="{{pathFor 'about'}}" data-action="scrollTop">learn more</a>
       {{#contentFor 'image'}}
-        <img class="ui circular large image" src="http://lorempixel.com/300/300/people/1">
+        <img class="ui circular large image" src="/assets/images/avatars/default_01.svg">
       {{/contentFor}}
     {{/Layout}}
   {{/with}}
@@ -33,7 +33,7 @@
       <p>{{lorem}}</p>
       <a class="ui primary button" href="{{pathFor 'blogList'}}" data-action="scrollTop">learn more</a>
       {{#contentFor 'image'}}
-        <img class="ui circular large image" src="http://lorempixel.com/300/300/people/2">
+        <img class="ui circular large image" src="/assets/images/avatars/default_06.svg">
       {{/contentFor}}
     {{/Layout}}
   {{/with}}
@@ -46,7 +46,7 @@
       <p>{{lorem}}</p>
       <a class="ui primary button" href="{{pathFor 'blogList'}}" data-action="scrollTop">learn more</a>
       {{#contentFor 'image'}}
-        <img class="ui circular large image" src="http://lorempixel.com/300/300/people/3">
+        <img class="ui circular large image" src="/assets/images/avatars/default_03.svg">
       {{/contentFor}}
     {{/Layout}}
   {{/with}}
@@ -60,15 +60,11 @@
   <div class="ui hidden divider"></div>
 
   <div class="ui doubling three columns grid">
-    <div class="column">
-      {{> userCard}}
-    </div>
-    <div class="column">
-      {{> userCard}}
-    </div>
-    <div class="column">
-      {{> userCard}}
-    </div>
+    {{#each authors}}
+      <div class="column">
+        {{> userCard this.profile}}
+      </div>
+    {{/each}}
   </div>
 
   {{#contentFor 'banner'}}
