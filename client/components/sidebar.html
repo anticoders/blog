@@ -1,31 +1,19 @@
 <template name="sidebar">
 
   <div class="ui left vertical inverted labeled icon sidebar menu">
-    <a class="item">
+    <a class="item" href="{{pathFor 'landingPage'}}" data-action="toggle">
       <i class="home icon"></i>
       Home
     </a>
-    <a class="item">
-      <i class="block layout icon"></i>
-      Topics
+    <a class="item" href="{{pathFor 'blogList'}}" data-action="toggle">
+      <i class="cube icon"></i>
+      Blog
     </a>
-    <a class="item">
+    <a class="item" href="{{pathFor 'about'}}" data-action="toggle">
       <i class="child icon"></i>
       About
     </a>
-    <a class="item">
-      <i class="calendar icon"></i>
-      History
-    </a>
-    <a class="item">
-      <i class="mail icon"></i>
-      Messages
-    </a>
-    <a class="item">
-      <i class="chat icon"></i>
-      Discussions
-    </a>
-    <a class="item">
+    <a class="item" href="{{pathFor 'login'}}" data-action="toggle">
       <i class="sign in icon"></i>
       Login
     </a>
