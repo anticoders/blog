@@ -3,6 +3,8 @@ Template.profileForm.rendered = function () {
 
   // initialize semantic ui form gears
 
+  var self = this;
+
   this.$('.ui.checkbox').checkbox();
 
   this.$('.dropdown').dropdown();
@@ -23,6 +25,15 @@ Template.profileForm.rendered = function () {
         {
           type   : 'empty',
           prompt : 'Please enter your last name'
+        }
+      ]
+    },
+    motto: {
+      identifier  : 'motto',
+      rules: [
+        {
+          type   : 'empty',
+          prompt : 'Please write your motto'
         }
       ]
     },
@@ -53,6 +64,11 @@ Template.profileForm.rendered = function () {
         }
       ]
     },
+  });
+
+  this.autorun(function () {
+    var data = Template.currentData();
+    self.$('.ui.form').form('set values', data);
   });
 
 };

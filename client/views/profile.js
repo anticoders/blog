@@ -4,5 +4,5 @@ Template.profile.events({
     e.preventDefault();
     var data = t.$('.ui.form').form('get values');
     console.log('submit', data);
-  }
+  },
 });

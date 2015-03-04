@@ -2,15 +2,14 @@
 
   <div class="ui stackable grid">
     <div class="four wide column">
-      {{> userCard}}
+      {{> userCard currentUser.profile}}
     </div>
     <div class="twelve wide column">
       <div class="ui segment">
-        {{> profileForm}}
+        {{> profileForm currentUser.profile}}
       </div>
     </div>
   </div>
-
 
   {{#contentFor 'header'}}
     <h1>This is your profile page ...</h1>

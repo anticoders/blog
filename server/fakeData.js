@@ -21,6 +21,7 @@ Meteor.startup(function () {
       password : 'password',
       email    : 'fake_' + index + '@example',
       profile  : {
+        joinedAt  : moment().toDate(),
         firstName : user.name,
         lastName  : user.surname,
         gender    : maleOrFemale,
