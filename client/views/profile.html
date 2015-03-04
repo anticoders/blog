@@ -1,0 +1,19 @@
+<template name="profile">
+
+  <div class="ui stackable grid">
+    <div class="four wide column">
+      {{> userCard}}
+    </div>
+    <div class="twelve wide column">
+      <div class="ui segment">
+        {{> profileForm}}
+      </div>
+    </div>
+  </div>
+
+
+  {{#contentFor 'header'}}
+    <h1>This is your profile page ...</h1>
+  {{/contentFor}}
+
+</template>

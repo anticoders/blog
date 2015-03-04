@@ -13,10 +13,21 @@
       <i class="child icon"></i>
       About
     </a>
+    {{#unless currentUser}}
     <a class="item" href="{{pathFor 'login'}}" data-action="toggle">
       <i class="sign in icon"></i>
       Login
     </a>
+    {{else}}
+    <a class="item" href="{{pathFor 'profile'}}" data-action="toggle">
+      <i class="user icon"></i>
+      Profile
+    </a>
+    <a class="item" href="{{pathFor 'landingPage'}}" data-action="logout">
+      <i class="sign out icon"></i>
+      Logout
+    </a>
+    {{/unless}}
   </div>
 
   <div class="ui black big launch right attached fixed button" data-action="toggle">

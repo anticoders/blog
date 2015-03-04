@@ -16,9 +16,29 @@ Router.route('/login', {
 
   action : function () {
 
+    if (Meteor.userId()) {
+      this.redirect('profile', { replaceState: true });
+      return;
+    }
+
     this.breadcrumb = [
       { title: 'home'  , link: Router.path('landingPage') },
       { title: 'login' , link: Router.path('about') },
+    ];
+
+    this.render();
+  },
+});
+
+Router.route('/profile', {
+  name  : 'profile',
+  where : 'client',
+
+  action : function () {
+
+    this.breadcrumb = [
+      { title: 'home'    , link: Router.path('landingPage') },
+      { title: 'profile' , link: Router.path('profile') },
     ];
 
     this.render();
