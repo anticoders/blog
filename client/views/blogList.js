@@ -12,6 +12,17 @@ Template.blogList.helpers({
   summary: function () {
     return this.summary || brief(this.chunks[0].content, 512);
   },
+  image: function () {
+    if (this.image) {
+      return this.image;
+    }
+    var author = Meteor.users.findOne({ _id: this.createdBy });
+    console.log(author, this);
+    if (author && author.profile && author.profile.avatarUrl) {
+      return author.profile.avatarUrl;
+    }
+    return Meteor.absoluteUrl('assets/images/avatars/default_00.svg');  
+  },
 });
 
 Template.blogList.events({
