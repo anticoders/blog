@@ -3,8 +3,8 @@ Template.landingPage.rendered = function () {
 };
 
 Template.landingPage.helpers({
-  lorem: function () {
-    return Fake.paragraph(20);
+  lorem: function (numberOfSetences) {
+    return Fake.paragraph(numberOfSetences || 20);
   },
   listOfSlides: function () {
     return [

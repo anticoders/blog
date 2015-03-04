@@ -17,8 +17,10 @@ Template.master.rendered = function () {
       var offset = $node.offset();
       var width  = $node.width();
       var height = $node.height();
+      var index  = $node.index();
 
       Meteor.defer(function () {
+        
         $('.pusher').append($node);
 
         $node
@@ -30,7 +32,7 @@ Template.master.rendered = function () {
           .css('height', height)
           // and animate ...
           .removeClass('bounceInLeft')
-          .addClass('animated fadeOutRight')
+          .addClass('animated ' + (index % 2 ? 'fadeOutRight' : 'fadeOutLeft'))
 
       });
 

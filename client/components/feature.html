@@ -1,22 +1,17 @@
 <template name="feature">
-  <div class="ui card">
-    <div class="image">
-      <img src="http://lorempixel.com/200/200/people">
+  <div class="ui stackable grid">
+    {{#unless imageOnTheLeft}}
+    <div class="eight wide column">
+      {{> yield 'image'}}
     </div>
-    <div class="content">
-      <a class="header">Stevie Feliciano</a>
-      <div class="meta">
-        <span class="date">Joined in 2014</span>
-      </div>
-      <div class="description">
-        Stevie Feliciano is a library scientist living in New York City. She likes to spend her time reading, running, and writing.
-      </div>
+    {{/unless}}
+    <div class="eight wide column">
+      {{> yield}}
     </div>
-    <div class="extra content">
-      <a>
-        <i class="user icon"></i>
-        22 Friends
-      </a>
+    {{#if imageOnTheLeft}}
+    <div class="eight wide column">
+      {{> yield 'image'}}
     </div>
+    {{/if}}
   </div>
 </template>

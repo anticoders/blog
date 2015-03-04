@@ -1,34 +1,75 @@
 
 <template name="landingPage">
-  <h1>This is our landing page.</h1>
+  <h1>This is our landing page ...</h1>
 
-  <section class="landing page section">
-
-    <p>{{lorem}}</p>
-
-  </section>
-
-  <div class="ui hidden divider"></div>
-
-  <div class="ui doubling three columns grid">
+  <div class="ui two column stackable grid">
     <div class="column">
-      {{> feature}}
+      <p>{{lorem 10}}</p>
+      <p>{{lorem 15}}</p>
     </div>
     <div class="column">
-      {{> feature}}
-    </div>
-    <div class="column">
-      {{> feature}}
+      <p>{{lorem}}</p>
     </div>
   </div>
 
   <div class="ui divider"></div>
 
+  {{#with imagePostion='left'}}
+    {{#Layout template='feature'}}
+      <h2>This is who we are ...</h2>
+      <p>{{lorem}}</p>
+      <a class="ui primary button" href="{{pathFor 'about'}}" data-action="scrollTop">learn more</a>
+      {{#contentFor 'image'}}
+        <img class="ui circular large image" src="http://lorempixel.com/300/300/people/1">
+      {{/contentFor}}
+    {{/Layout}}
+  {{/with}}
+
+  <div class="ui divider"></div>
+
+  {{#with imagePostion='right'}}
+    {{#Layout template='feature'}}
+      <h2>This is what we do ...</h2>
+      <p>{{lorem}}</p>
+      <a class="ui primary button" href="{{pathFor 'blog'}}" data-action="scrollTop">learn more</a>
+      {{#contentFor 'image'}}
+        <img class="ui circular large image" src="http://lorempixel.com/300/300/people/2">
+      {{/contentFor}}
+    {{/Layout}}
+  {{/with}}
+
+  <div class="ui divider"></div>
+
+  {{#with imagePostion='left'}}
+    {{#Layout template='feature'}}
+      <h2>This is what we know ...</h2>
+      <p>{{lorem}}</p>
+      <a class="ui primary button" href="{{pathFor 'blog'}}" data-action="scrollTop">learn more</a>
+      {{#contentFor 'image'}}
+        <img class="ui circular large image" src="http://lorempixel.com/300/300/people/3">
+      {{/contentFor}}
+    {{/Layout}}
+  {{/with}}
+
+  <div class="ui divider"></div>
+
+  <h1>Here comes some more details</h1>
+
   <p>{{lorem}}</p>
 
   <div class="ui hidden divider"></div>
 
-  <p>{{lorem}}</p>
+  <div class="ui doubling three columns grid">
+    <div class="column">
+      {{> userCard}}
+    </div>
+    <div class="column">
+      {{> userCard}}
+    </div>
+    <div class="column">
+      {{> userCard}}
+    </div>
+  </div>
 
   {{#contentFor 'banner'}}
     
