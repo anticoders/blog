@@ -19,7 +19,7 @@ Template.master.rendered = function () {
       var height = $node.height();
 
       Meteor.defer(function () {
-        $('body').append($node);
+        $('.pusher').append($node);
 
         $node
           .css('position', 'absolute')
