@@ -17,7 +17,6 @@ Template.blogPostEdit.rendered = function () {
       var indexAfterSort = ui.item.index();
       var sortedData = Blaze.getData( ui.item.get(0) );
       var chunkArray = BlogPosts.findOne({_id: that.data._id}, {reactive: false}).chunks;
-      console.log(chunkArray, sortedData);
       Helpers.moveInArray(chunkArray, that.indexBeforeSort, indexAfterSort); //move element at new index in-place
       BlogPosts.update({ _id: that.data._id }, { $set: { chunks: chunkArray } });
     }

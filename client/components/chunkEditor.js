@@ -17,8 +17,8 @@ Template.chunkEditor.events({
     var controller = Iron.controller();
     var updates = {};
     var blogPost = Template.parentData();
-    console.log(this.index);
-    if (this.index === undefined) {
+    var index = t.$('.chunkEditor').index();
+    if (index === -1) {
       throw new Meteor.Error('chunk without an index may not be edited');
     }
     if (!blogPost) {
@@ -27,7 +27,7 @@ Template.chunkEditor.events({
     if (controller && controller.hint) {
       controller.hint.set('saving ...');
     }
-    updates['chunks.' + this.index + '.content'] = t.editorCodeMirror.getValue();
+    updates['chunks.' + index + '.content'] = t.editorCodeMirror.getValue();
     doUpdate(blogPost._id, updates, function () {
       if (controller && controller.hint) {
         controller.hint.set('saving done!');
