@@ -15,7 +15,6 @@ Template.blogPostEdit.rendered = function () {
     },
     stop: function(e, ui) {
       var indexAfterSort = ui.item.index();
-      var sortedData = Blaze.getData( ui.item.get(0) );
       var chunkArray = BlogPosts.findOne({_id: that.data._id}, {reactive: false}).chunks;
       Helpers.moveInArray(chunkArray, that.indexBeforeSort, indexAfterSort); //move element at new index in-place
       BlogPosts.update({ _id: that.data._id }, { $set: { chunks: chunkArray } });
@@ -28,5 +27,11 @@ Template.blogPostEdit.destroyed = function () {
 };
 
 Template.blogPostEdit.events({
-
+  'click .add-chunk': function(e, tmpl) {
+    var chunkToAdd = {
+      type: 'text',
+      content: ''
+    };
+    BlogPosts.update({ _id: tmpl.data._id }, { $push: { chunks: chunkToAdd } });
+  }
 });
