@@ -15,7 +15,7 @@ Template.about.helpers({
   motto: function () {
     return Fake.sentence();
   },
-  members: function () {
-    return [ { index: 1 }, { index: 8 }, { index: 7 } ];
+  authors: function () {
+    return Meteor.users.find();
   },
 });

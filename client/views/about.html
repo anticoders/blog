@@ -18,22 +18,22 @@
   <div class="ui divider"></div>
 
   <div class="ui bio items">
-    {{#each members}}
+    {{#each authors}}
       {{#Layout template='bio'}}
 
         {{#contentFor 'header'}}
-          {{name}}
+          {{profile.firstName}} {{profile.lastName}}
         {{/contentFor}}
 
         {{#contentFor 'meta'}}
-          {{motto}}
+          {{profile.motto}}
         {{/contentFor}}
 
         {{#contentFor 'image'}}
-          <img src="http://lorempixel.com/200/200/people/{{index}}">
+          <img src="{{profile.avatarUrl}}">
         {{/contentFor}}
 
-    {{#markdown}}{{bio}}{{/markdown}}
+{{#markdown}}{{profile.biography}}{{/markdown}}
 
       {{/Layout}}
 

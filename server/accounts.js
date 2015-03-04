@@ -21,5 +21,5 @@ function getRandomAvatarUrl(gender) {
   if (digits.length < 2) {
     digits = '0' + digits;
   }
-  return Meteor.absoluteUrl('assets/images/avatars/devault_' + digits + '.png');
+  return Meteor.absoluteUrl('assets/images/avatars/default_' + digits + '.svg');
 }
