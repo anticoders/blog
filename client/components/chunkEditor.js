@@ -1,37 +1,25 @@
 Template.chunkEditor.rendered = function() {
   var that = this;
-  var staticContent = this.data.content;
+  var staticContent = this.data.chunk.content;
   this.$('textarea').val(staticContent);
-  var chunkType = this.data && this.data.type || 'text';
+  var chunkType = this.data && this.data.chunk && this.data.chunk.type || 'text';
 
   this.editorCodeMirror = CodeMirror.fromTextArea(this.find('textarea'),initMode(chunkType));
   window.qweqwe = this.editorCodeMirror;
 };
 
-var doUpdate = _.debounce(function (postId, updates, done) {
-  BlogPosts.update({ _id: postId }, { $set: updates }, done);
-}, 500);
-
 Template.chunkEditor.events({
   'keyup textarea': function (e, t) {
-    var controller = Iron.controller();
+    var hint = App.getHintFunction();
     var updates = {};
-    var blogPost = Template.parentData();
     var index = t.$('.chunkEditor').index();
     if (index === -1) {
       throw new Meteor.Error('chunk without an index may not be edited');
     }
-    if (!blogPost) {
-      throw new Meteor.Error('parentData for chunk editor should be a blog post');
-    }
-    if (controller && controller.hint) {
-      controller.hint.set('saving ...');
-    }
+    hint('saving ...');
     updates['chunks.' + index + '.content'] = t.editorCodeMirror.getValue();
-    doUpdate(blogPost._id, updates, function () {
-      if (controller && controller.hint) {
-        controller.hint.set('');
-      }
+    App.doUpdate(this.blogPostId, updates, function () {
+      hint('');
     });
   },
   'dragover textarea': function (e, t) {
@@ -44,7 +32,7 @@ Template.chunkEditor.events({
     if (!blogPost) {
       throw new Meteor.Error('parentData for chunk editor should be a blog post');
     }
-    var listOfIds = addPlaceholders(e.originalEvent, blogPost._id, this, t.$('textarea').val());
+    var listOfIds = addPlaceholders(e.originalEvent, this.blogPostId, this.chunk, t.$('textarea').val());
     uploadImages(e.originalEvent, function (listOfResults) {
       var content = t.$('textarea').val();
       _.each(listOfIds, function (id, index) {
@@ -63,9 +51,8 @@ Template.chunkEditor.events({
   'click .chunk-remove': function(e, t){
     //TODO: display nice modal
     if ( !confirm('Do you really want to remove selected chunk from database?') ) return false;
-    var controller = Iron.controller();
-    var blogPost = Template.parentData();
-    var chunkArray = BlogPosts.findOne({_id: blogPost._id}, {reactive: false}).chunks;
+    var hint = App.getHintFunction();
+    var chunkArray = BlogPosts.findOne({_id: this.blogPostId}, {reactive: false}).chunks;
     var index = t.$('.chunkEditor').index();
     if (index === -1) {
       throw new Meteor.Error('chunk without an index may not be edited');
@@ -73,14 +60,10 @@ Template.chunkEditor.events({
     if (!chunkArray) {
       throw new Meteor.Error('array of chunks should exists for blog post');
     }
-    if (controller && controller.hint) {
-      controller.hint.set('saving ...');
-    }
+    hint('saving ...');
     chunkArray.splice(index, 1); //removes chunk from array
-    BlogPosts.update({ _id: blogPost._id }, { $set: { chunks: chunkArray} }, function () {
-      if (controller && controller.hint) {
-        controller.hint.set('');
-      }
+    BlogPosts.update({ _id: this.blogPostId }, { $set: { chunks: chunkArray} }, function () {
+      hint('');
     });
   }
 });

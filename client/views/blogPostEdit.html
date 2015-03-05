@@ -6,12 +6,12 @@
   {{> publishButton}}
 
   {{#contentFor 'header'}}
-    {{> titleEditor}}
+    {{> titleEditor this}}
   {{/contentFor}}
 
   <div class="chunks-container">
     {{#each $helpers.enumerated chunks}}
-      {{> chunkEditor}}
+      {{> chunkEditor chunk=this blogPostId=../_id}}
     {{/each}}
   </div>
   <div class="ui labeled icon button positive" data-action="addChunk">
