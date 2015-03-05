@@ -4,13 +4,14 @@ Accounts.onCreateUser(function (options, user) {
     options.profile = {};
   }
   if (!options.profile.avatarUrl) {
-    options.profile.avatarUrl = getRandomAvatarUrl(options.profile.gender);
+    options.profile.avatarUrl = getRandomAvatarUrl();
   }
+  options.profile.joinedAt = moment().toDate();
   user.profile = options.profile;
   return user;
 });
 
-function getRandomAvatarUrl(gender) {
+Accounts.getRandomAvatarUrl = function (gender) {
   var min = 0, max = 0;
   if (gender === 'male') {
     min = 1; max = 4;

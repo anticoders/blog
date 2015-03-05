@@ -1,28 +1,14 @@
 <template name="profileForm">
   <form class="ui form">
     <h4 class="ui dividing header">Personal Information</h4>
-    <div class="two fields">
-      <div class="required field">
-        <label>Name</label>
-        <div class="two fields">
-          <div class="field">
-            <input type="text" name="firstName" placeholder="First Name">
-          </div>
-          <div class="field">
-            <input type="text" name="lastName" placeholder="Last Name">
-          </div>
+    <div class="required field">
+      <label>Name</label>
+      <div class="two fields">
+        <div class="field">
+          <input type="text" name="firstName" placeholder="First Name">
         </div>
-      </div>
-      <div class="required field">
-        <label>Gender</label>
-        <div class="ui selection dropdown">
-          <input type="hidden" name="gender">
-          <div class="default text">Gender</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            <div class="item" data-value="male">Male</div>
-            <div class="item" data-value="female">Female</div>
-          </div>
+        <div class="field">
+          <input type="text" name="lastName" placeholder="Last Name">
         </div>
       </div>
     </div>
@@ -34,9 +20,9 @@
       <label>Biography</label>
       <textarea name="biography"></textarea>
     </div>
-    <h4 class="ui dividing header">Account Info</h4>
+    <h4 class="ui dividing header">Account Settings</h4>
     <div class="two fields">
-      <div class="required field">
+      <div class="field">
         <label>Username</label>
         <div class="ui icon input">
           <input type="text" name="username" placeholder="Username">
@@ -46,20 +32,6 @@
       <div class="field">
         <label>Password</label>
         <button class="ui basic right labeled icon fluid button" type="button">change password <i class="lock icon"></i></button>
-      </div>
-    </div>
-    <h4 class="ui dividing header">Settings</h4>
-    <h5 class="ui header">Privacy</h5>
-    <div class="field">
-      <div class="ui toggle checkbox">
-        <input type="radio" name="published" value="on">
-        <label>Make this profile visible on the <b>main page</b></label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui toggle checkbox">
-        <input type="radio" name="published" value="off" checked>
-        <label>Do not show this profile on the <b>main page</b></label>
       </div>
     </div>
     <div class="ui hidden divider"></div>

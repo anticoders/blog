@@ -21,11 +21,11 @@ Meteor.startup(function () {
       password : 'password',
       email    : 'fake_' + index + '@example',
       profile  : {
+        avatarUrl : Accounts.getRandomAvatarUrl(maleOrFemale),
         joinedAt  : moment().toDate(),
         firstName : user.name,
         lastName  : user.surname,
-        gender    : maleOrFemale,
-        motto     : Fake.sentence(),
+        summary   : Fake.sentence(),
         biography : Fake.paragraph(5) + '\n\n' + Fake.paragraph(10),
       },
     });

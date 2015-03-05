@@ -5,10 +5,6 @@ Template.profileForm.rendered = function () {
 
   var self = this;
 
-  this.$('.ui.checkbox').checkbox();
-
-  this.$('.dropdown').dropdown();
-
   this.$('.ui.form').form({
     firstName: {
       identifier  : 'firstName',
@@ -43,24 +39,6 @@ Template.profileForm.rendered = function () {
         {
           type   : 'empty',
           prompt : 'Please write your biography'
-        }
-      ]
-    },
-    gender: {
-      identifier  : 'gender',
-      rules: [
-        {
-          type   : 'empty',
-          prompt : 'Please select a gender'
-        }
-      ]
-    },
-    username: {
-      identifier : 'username',
-      rules: [
-        {
-          type   : 'empty',
-          prompt : 'Please enter a username'
         }
       ]
     },
