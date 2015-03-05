@@ -17,5 +17,6 @@ reactive-var
 chuangbo:marked
 simple:highlight.js
 s3uploader
+dependencies
 mrt:jquery-ui-sortable
 matb33:collection-hooks

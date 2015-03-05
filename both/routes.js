@@ -104,6 +104,31 @@ Router.route('/blog/:_id', {
 
 });
 
+Router.route('/blog/:year/:slug', {
+  name  : 'published',
+  where : 'client',
+
+  waitOn: function () {
+    return Meteor.subscribe('blogPosts');
+  },
+
+  data: function () {
+    return BlogPosts.findOne({ _id: this.params._id });
+  },
+
+  action: function () {
+
+    this.breadcrumb = [
+      { title: 'home' , link: Router.path('landingPage') },
+      { title: 'blog' , link: Router.path('blogList') },
+      { title: 'post' , link: Router.path('published', this.params) },
+    ];
+
+    this.render();
+  },
+
+});
+
 Router.route('/edit/:_id', {
   name   : 'blogPostEdit',
   where  : 'client',

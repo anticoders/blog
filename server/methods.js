@@ -1,3 +1,6 @@
+
+var S = Dependencies.require('string');
+
 Meteor.methods({
   publish: function (blogPostId) {
     check(blogPostId, String);
@@ -17,6 +20,13 @@ Meteor.methods({
     delete blogPost._id;
 
     // publish
+
+    blogPost.year = moment(blogPost.createdAt).year();
+    blogPost.slug = S(blogPost.title).slugify().s;
+
+    if (Published.find({ _id: { $ne: blogPostId }, year: blogPost.year, slug: blogPost.slug }).count() > 0) {
+      throw new Meteor.Error(400, 'This slug is already used; try changing your title ...');
+    }
 
     Published.upsert({ _id: blogPostId }, { $set: blogPost });
     BlogPosts.update({ _id: blogPostId }, { $set: { publishedAt: moment().toDate() }});

@@ -13,6 +13,7 @@ check@1.0.4
 chuangbo:marked@0.3.5
 coffeescript@1.0.5
 ddp@1.0.14
+dependencies@0.0.0
 deps@1.0.6
 ejson@1.0.5
 email@1.0.5
