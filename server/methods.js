@@ -21,4 +21,18 @@ Meteor.methods({
     Published.upsert({ _id: blogPostId }, { $set: blogPost });
     BlogPosts.update({ _id: blogPostId }, { $set: { publishedAt: moment().toDate() }});
   },
+
+  unpublish: function (blogPostId) {
+    check(blogPostId, String);
+
+    // maybe only an admin user should be able to do this?
+    
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'Access denied');
+    }
+
+    Published.remove({ _id: blogPostId });
+    BlogPosts.update({ _id: blogPostId }, { $unset: { publishedAt: 1 }});
+  },
 });
+

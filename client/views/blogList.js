@@ -28,6 +28,12 @@ Template.blogList.events({
       Router.go('blogPostEdit', { _id: postId });
     });
   },
+  'click [data-action=publish]': function () {
+    Meteor.call('publish', this._id);
+  },
+  'click [data-action=unpublish]': function () {
+    Meteor.call('unpublish', this._id);
+  },
 });
 
 function brief(text, length) {

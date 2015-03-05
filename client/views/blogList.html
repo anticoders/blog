@@ -32,6 +32,15 @@
           <a class="ui right floated small primary compact button" href="{{pathFor 'blogPost'}}" data-action="scrollTop">
             read more
           </a>
+          {{#if publishedAt}}
+            <a class="ui right floated small negative compact button" data-action="unpublish">
+              unpublish
+            </a>
+          {{else}}
+            <a class="ui right floated small positive compact button" data-action="publish">
+              publish
+            </a>
+          {{/if}}
           {{#if $app.canEdit}}
             <a class="ui right floated small compact labeled icon button" href="{{pathFor 'blogPostEdit'}}" data-action="scrollTop">
               edit this post <i class="ui icon write"></i>
