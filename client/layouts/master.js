@@ -57,9 +57,6 @@ Template.master.helpers({
       return controller.hint.get();
     }
   },
-  year: function () {
-    return moment().year();
-  },
   images: function () {
     return [
       Helpers.asset('images/country_1.jpg'),
