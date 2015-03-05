@@ -1,7 +1,7 @@
 
 App.modal = function (name, data, options) {
   
-  var view = Blaze.renderWithData(Template[name], {}, $('body').get(0));
+  var view = Blaze.renderWithData(Template[name], data, $('body').get(0));
 
   view._modal = options || {};
 

@@ -1,0 +1,23 @@
+<template name="editableCard">
+  <div class="ui editable card">
+    <div class="ui circular rotate reveal image">
+      <img class="visible content" src="{{avatarUrl}}">
+      <img class="hidden  content" src="/assets/images/upload.svg">
+    </div>
+    <div class="content">
+      <a class="header">{{firstName}} {{lastName}}</a>
+      <div class="meta">
+        <span class="date">Joined in {{joinedInYear}}</span>
+      </div>
+      <div class="description">
+        {{summary}}
+      </div>
+    </div>
+    <div class="extra content">
+      <a>
+        <i class="comment outline icon"></i>
+        100 Posts
+      </a>
+    </div>
+  </div>
+</template>
