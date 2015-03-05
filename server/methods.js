@@ -7,9 +7,10 @@ Meteor.methods({
 
     // maybe only an admin user should be able to do this?
     
-    if (!this.userId) {
-      throw new Meteor.Error(403, 'Access denied');
-    }
+    // TODO: enable this later on (see fake data generation)
+    //if (!this.userId) {
+    //  throw new Meteor.Error(403, 'Access denied');
+    //}
 
     var blogPost = BlogPosts.findOne({ _id: blogPostId });
 

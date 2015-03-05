@@ -34,8 +34,11 @@ Meteor.startup(function () {
 
   _.each(usersIds, function (userId) {
 
-    BlogPosts.create({ createdBy: userId });
-    BlogPosts.create({ createdBy: userId });
+    var postId1 = BlogPosts.create({ createdBy: userId });
+    var postId2 = BlogPosts.create({ createdBy: userId });
+
+    Meteor.call('publish', postId1);
+    Meteor.call('publish', postId2);
 
   });
 
