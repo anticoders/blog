@@ -2,6 +2,10 @@
   {{> breadcrumb items=$helpers.breadcrumb}}
 
   {{> titleEditor}}
+  <div class="ui labeled icon button positive add-chunk">
+    <i class="add icon"></i>
+    Add new chunk
+  </div>
   <div class="chunks-container">
     {{#each $helpers.enumerated chunks}}
       {{> chunkEditor}}

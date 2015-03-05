@@ -60,8 +60,28 @@ Template.chunkEditor.events({
     e.preventDefault();
     return false;
   },
-  'click .sort-chunk': function(e, t){
-
+  'click .chunk-remove': function(e, t){
+    //TODO: display nice modal
+    if ( !confirm('Do you really want to remove selected chunk from database?') ) return false;
+    var controller = Iron.controller();
+    var blogPost = Template.parentData();
+    var chunkArray = BlogPosts.findOne({_id: blogPost._id}, {reactive: false}).chunks;
+    var index = t.$('.chunkEditor').index();
+    if (index === -1) {
+      throw new Meteor.Error('chunk without an index may not be edited');
+    }
+    if (!chunkArray) {
+      throw new Meteor.Error('array of chunks should exists for blog post');
+    }
+    if (controller && controller.hint) {
+      controller.hint.set('saving ...');
+    }
+    chunkArray.splice(index, 1); //removes chunk from array
+    BlogPosts.update({ _id: blogPost._id }, { $set: { chunks: chunkArray} }, function () {
+      if (controller && controller.hint) {
+        controller.hint.set('saving done!');
+      }
+    });
   }
 });
 
