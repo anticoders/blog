@@ -1,4 +1,7 @@
 
+@headerHeight: 250px;
+@bannerHeight: 400px;
+
 .master.layout.content {
   padding-top: 2em;
   padding-left: 10%;
@@ -35,7 +38,7 @@
   }
 
   .banner {
-    margin-top: -400px;
+    margin-top: -@bannerHeight;
   }
 
   .banner.active,
@@ -45,15 +48,15 @@
   }
 
   .banner {
-    height: 400px;
+    height: @bannerHeight;
   }
 
   .header {
-    height: 200px;
+    height: @headerHeight;
   }
 
   .header {
-    margin-bottom: -200px;
+    margin-bottom: -@headerHeight;
   }
 
   .header .overlay {
