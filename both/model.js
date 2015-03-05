@@ -64,6 +64,11 @@ BlogPost.prototype.getImageUrl = function () {
   return Meteor.absoluteUrl('assets/images/avatars/default_00.svg');
 }
 
+BlogPost.prototype.getAuthorInfo = function () {
+  var author = Meteor.users.findOne({ _id: this.createdBy });
+  return (author ? author.getFullName() + ' on ' : '') + moment(this.createdAt).format('MMMM Do YYYY');
+}
+
 // User
 
 function User (data) {
@@ -75,5 +80,12 @@ User.prototype.getAvatarUrl = function () {
     return this.profile.avatarUrl;
   }
   return Meteor.absoluteUrl('assets/images/avatars/default_00.svg');
+}
+
+User.prototype.getFullName = function () {
+  if (!this.profile) {
+    return '[unknown]';
+  }
+  return this.profile.firstName + ' ' + this.profile.lastName;
 }
 

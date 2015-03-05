@@ -20,7 +20,7 @@
       <div class="content">
         <a class="header" href="{{pathFor 'blogPost'}}" data-action="scrollTop">{{title}}</a>
         <div class="meta">
-          <span class="date">{{createdAt}}</span>
+          <span class="date">{{./getAuthorInfo}}</span>
         </div>
         <div class="description">
           {{#markdown}}{{summary}}{{/markdown}}

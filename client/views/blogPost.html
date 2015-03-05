@@ -8,6 +8,7 @@
       <div class="thirteen wide column">
         <h1 class="animated bounceInDown">{{title}}</h1>
         <p class="animated bounceInRight">{{summary}}</p>
+        <p class="animated bounceInUp"><small>{{./getAuthorInfo}}</small></p>
       </div>
     </div>
   {{/contentFor}}
@@ -24,5 +25,5 @@
       {{#markdown}}{{content}}{{/markdown}}
     </p>
   {{/each}}
-  <small>{{createdAt}}</small>
+  <small>{{./getAuthorInfo}}</small>
 </template>
