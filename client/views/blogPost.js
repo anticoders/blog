@@ -10,10 +10,7 @@ Template.blogPost.helpers({
   title: function () {
     return this.title || '[no title]';
   },
-  createdAt: function () {
-    return moment(this.date).format();
-  },
   image: function () {
-    return this.getImageUrl();
+    return this && this.getImageUrl();
   },
 });

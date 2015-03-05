@@ -13,7 +13,7 @@ Template.blogList.helpers({
     return this.summary || brief(this.chunks[0].content, 512);
   },
   image: function () {
-    return this.getImageUrl();
+    return this && this.getImageUrl();
   },
 });
 
