@@ -12,7 +12,7 @@ Template.backstretch.rendered = function () {
 
   if (typeof self.data === 'object' && !self.data.images && !self.data.image) return;
 
-  self.$spinner = $('<div class="ui active dimmer"><div class="ui loader"></div></div>');
+  self.$spinner = $('<div class="ui active inverted dimmer"><div class="ui loader"></div></div>');
 
   $node.append(self.$spinner);
 
