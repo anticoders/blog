@@ -24,12 +24,12 @@ Template.profileForm.rendered = function () {
         }
       ]
     },
-    motto: {
-      identifier  : 'motto',
+    summary: {
+      identifier  : 'summary',
       rules: [
         {
           type   : 'empty',
-          prompt : 'Please write your motto'
+          prompt : 'Please write some summary'
         }
       ]
     },
