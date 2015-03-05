@@ -1,14 +1,21 @@
 <template name="blogPostEdit">
   {{> breadcrumb items=$helpers.breadcrumb}}
 
-  {{> titleEditor}}
-  <div class="ui labeled icon button positive add-chunk">
-    <i class="add icon"></i>
-    Add new chunk
-  </div>
+  <div class="ui hidden divider"></div>
+
+  {{> publishButton}}
+
+  {{#contentFor 'header'}}
+    {{> titleEditor}}
+  {{/contentFor}}
+
   <div class="chunks-container">
     {{#each $helpers.enumerated chunks}}
       {{> chunkEditor}}
     {{/each}}
+  </div>
+  <div class="ui labeled icon button positive" data-action="addChunk">
+    <i class="add icon"></i>
+    Add new chunk
   </div>
 </template>

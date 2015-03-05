@@ -64,3 +64,10 @@ BlogPost.prototype.getAuthorInfo = function () {
   var author = Meteor.users.findOne({ _id: this.createdBy });
   return (author ? author.getFullName() + ' on ' : '') + moment(this.createdAt).format('MMMM Do YYYY');
 }
+
+BlogPost.prototype.isModified = function () {
+  if (!this.publishedAt) {
+    return true;
+  }
+  return this.publishedAt < this.modifiedAt;
+}

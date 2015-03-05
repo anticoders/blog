@@ -30,7 +30,7 @@ Template.chunkEditor.events({
     updates['chunks.' + index + '.content'] = t.editorCodeMirror.getValue();
     doUpdate(blogPost._id, updates, function () {
       if (controller && controller.hint) {
-        controller.hint.set('saving done!');
+        controller.hint.set('');
       }
     });
   },
@@ -79,7 +79,7 @@ Template.chunkEditor.events({
     chunkArray.splice(index, 1); //removes chunk from array
     BlogPosts.update({ _id: blogPost._id }, { $set: { chunks: chunkArray} }, function () {
       if (controller && controller.hint) {
-        controller.hint.set('saving done!');
+        controller.hint.set('');
       }
     });
   }

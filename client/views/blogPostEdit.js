@@ -27,11 +27,10 @@ Template.blogPostEdit.destroyed = function () {
 };
 
 Template.blogPostEdit.events({
-  'click .add-chunk': function(e, tmpl) {
+  'click [data-action=addChunk]': function(e, tmpl) {
     var chunkToAdd = {
-      type: 'text',
-      content: ''
+      type: 'text', content: ''
     };
     BlogPosts.update({ _id: tmpl.data._id }, { $push: { chunks: chunkToAdd } });
-  }
+  },
 });

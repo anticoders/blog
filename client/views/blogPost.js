@@ -11,6 +11,6 @@ Template.blogPost.helpers({
     return this.title || '[no title]';
   },
   image: function () {
-    return this && this.getImageUrl();
+    return this && this.getImageUrl && this.getImageUrl();
   },
 });
