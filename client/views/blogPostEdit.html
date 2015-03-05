@@ -6,7 +6,12 @@
   {{> publishButton}}
 
   {{#contentFor 'header'}}
-    {{> titleEditor this}}
+    <div class="ui grid">
+      <div class="thirteen wide column">
+        {{> titleEditor this}}
+        {{> summaryEditor this}}
+      </div>
+    </div>
   {{/contentFor}}
 
   <div class="chunks-container">
