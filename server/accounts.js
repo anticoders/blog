@@ -1,16 +1,4 @@
 
-Accounts.onCreateUser(function (options, user) {
-  if (!options.profile) {
-    options.profile = {};
-  }
-  if (!options.profile.avatarUrl) {
-    options.profile.avatarUrl = getRandomAvatarUrl();
-  }
-  options.profile.joinedAt = moment().toDate();
-  user.profile = options.profile;
-  return user;
-});
-
 Accounts.getRandomAvatarUrl = function (gender) {
   var min = 0, max = 0;
   if (gender === 'male') {
@@ -23,4 +11,16 @@ Accounts.getRandomAvatarUrl = function (gender) {
     digits = '0' + digits;
   }
   return Meteor.absoluteUrl('assets/images/avatars/default_' + digits + '.svg');
-}
+};
+
+Accounts.onCreateUser(function (options, user) {
+  if (!options.profile) {
+    options.profile = {};
+  }
+  if (!options.profile.avatarUrl) {
+    options.profile.avatarUrl = Accounts.getRandomAvatarUrl();
+  }
+  options.profile.joinedAt = moment().toDate();
+  user.profile = options.profile;
+  return user;
+});
