@@ -19,9 +19,8 @@ Template.blogList.helpers({
 
 Template.blogList.events({
   'click [data-action=create]': function () {
-    console.log('creating post');
     BlogPosts.create({
-      createdBy: 'someFakeUser',
+      createdBy: Meteor.userId(),
     }, function (err, postId) {
       if (err) {
         App.error(err);
