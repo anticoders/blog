@@ -15,6 +15,12 @@ Template.blogList.helpers({
   image: function () {
     return this && this.getImageUrl && this.getImageUrl();
   },
+  pathForThisPost: function () {
+    if (this.slug && this.year) {
+      return Router.path('published', this);
+    }
+    return Router.path('blogPost', this);
+  },
 });
 
 Template.blogList.events({

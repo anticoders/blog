@@ -105,15 +105,17 @@ Router.route('/blog/:_id', {
 });
 
 Router.route('/blog/:year/:slug', {
-  name  : 'published',
-  where : 'client',
+
+  name     : 'published',
+  where    : 'client',
+  template : 'blogPost',
 
   waitOn: function () {
     return Meteor.subscribe('blogPosts');
   },
 
   data: function () {
-    return BlogPosts.findOne({ _id: this.params._id });
+    return BlogPosts.findOne({ year: parseInt(this.params.year), slug: this.params.slug });
   },
 
   action: function () {

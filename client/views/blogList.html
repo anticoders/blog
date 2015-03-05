@@ -18,7 +18,7 @@
         <img src="{{image}}">
       </div>
       <div class="content">
-        <a class="header" href="{{pathFor 'blogPost'}}" data-action="scrollTop">{{title}}</a>
+        <a class="header" href="{{pathForThisPost}}" data-action="scrollTop">{{title}}</a>
         <div class="meta">
           <span class="date">{{./getAuthorInfo}}</span>
         </div>
@@ -29,7 +29,7 @@
           {{#each tags}}
             <div class="ui horizontal label"><i class="tag icon"></i> {{this}}</div>
           {{/each}}
-          <a class="ui right floated small primary compact button" href="{{pathFor 'blogPost'}}" data-action="scrollTop">
+          <a class="ui right floated small primary compact button" href="{{pathForThisPost}}" data-action="scrollTop">
             read more
           </a>
           {{#if publishedAt}}
