@@ -10,7 +10,7 @@ Meteor.publish('blogPosts', function () {
     // pump items from Published collection to client "blogPosts" sink
     handle = pump(self, Published.find({}), 'blogPosts');
   } else {
-    handle = pump(self, blogPosts.find({}), 'blogPosts');
+    handle = pump(self, BlogPosts.find({}), 'blogPosts');
   }
 
   self.onStop(function () {
