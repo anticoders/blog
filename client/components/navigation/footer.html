@@ -1,31 +1,67 @@
 <template name="footer">
   <div class="ui inverted footer segment">
-    <div class="ui three column grid">
-      <div class="column">
-        <ul>
-          <li>item 1</li>
-          <li>item 2</li>
-          <li>item 3</li>
-        </ul>
-      </div>
-      <div class="column">
-        <ul>
-          <li>item 1</li>
-          <li>item 2</li>
-          <li>item 3</li>
-        </ul>
-      </div>
-      <div class="column">
-        <ul>
-          <li>item 1</li>
-          <li>item 2</li>
-          <li>item 3</li>
-        </ul>
-      </div>
-    </div>
+    <div class="ui relaxed two column page stackable grid">
 
-    <div class="copyright">
-      Copyright {{year}} Anticoders
+        <div class="column">
+          <h2>Contact us ...</h2>
+          {{> contactForm}}
+        </div>
+
+        <div class="column">
+          <h2>In short ...</h2>
+          <div class="ui relaxed stackable two column grid">
+
+            <div class="row">
+              <div class="column">
+                <div class="ui inverted list">
+                  <div class="item">
+                    <a class="header" href="{{pathFor 'landingPage'}}" data-action="scrollTop">home page</a>
+                    <div class="description">Visit our home page again</div>
+                  </div>
+                  <div class="item">
+                    <a class="header" href="{{pathFor 'about'}}" data-action="scrollTop">about us</a>
+                    <div class="description">Learn about people involved</div>
+                  </div>
+                  <div class="item">
+                    <a class="header" href="{{pathFor 'blogList'}}" data-action="scrollTop">blog</a>
+                    <div class="description">Read our blog</div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui inverted vertical divider">
+                Or
+              </div>
+              <div class="column">
+
+                <div class="ui inverted list">
+                  <div class="item">
+                    <a class="ui icon right labeled facebook fluid button"><i class="ui facebook icon"></i> Like us</a>
+                  </div>
+                  <div class="item">
+                   <a class="ui icon right labeled twitter fluid button"><i class="ui twitter icon"></i> Follow us</a>
+                  </div>
+                  <div class="item">
+                    <a class="ui icon right labeled google plus fluid button"><i class="ui google plus icon"></i> Add to circles</a>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- row -->
+
+            <div class="centered row">
+              <div class="ceter aligned column">
+                <img class="ui large image" src="/assets/images/avatars/default_04.svg">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
     </div>
+  </div>
+
+  <div class="ui copyright">
+    Copyright &copy; {{year}}, Anticoders
   </div>
 </template>

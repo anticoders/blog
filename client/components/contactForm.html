@@ -1,0 +1,30 @@
+<template name="contactForm">
+  <form class="ui inverted form">
+    <div class="required field">
+      <div class="two fields">
+        <div class="field">
+          <input type="text" name="name" placeholder="Your name">
+        </div>
+        <div class="field">
+          <input type="email" name="email" placeholder="Your email">
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <select class="ui search dropdown">
+        <option value="0">Choose topic</option>
+        <option value="1">How are you?</option>
+        <option value="2">How are you doing?</option>
+        <option value="3">Just wanted to say hi!</option>
+      </select>
+    </div>
+    <div class="required field">
+      <textarea name="message" placeholder="Say something nice!"></textarea>
+    </div>
+    <div class="field">
+      <div class="ui submit fluid primary button">send message</div>
+    </div>
+    <div class="ui error message">
+    </div>
+  </form>
+</template>
