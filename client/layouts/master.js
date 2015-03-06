@@ -1,8 +1,4 @@
 
-Template.master.created = function () {
-
-};
-
 Template.master.rendered = function () {
 
   var container = this.$('.master.layout.content')[0];
@@ -20,7 +16,6 @@ Template.master.rendered = function () {
       var index  = $node.index();
 
       Meteor.defer(function () {
-        
         $('.pusher').append($node);
 
         $node
@@ -33,7 +28,6 @@ Template.master.rendered = function () {
           // and animate ...
           .removeClass('bounceInLeft')
           .addClass('animated ' + (index % 2 ? 'fadeOutRight' : 'fadeOutLeft'))
-
       });
 
       Meteor.setTimeout(function () {
@@ -41,7 +35,6 @@ Template.master.rendered = function () {
       }, 1000);
     },
   }
-
 };
 
 Template.master.helpers({

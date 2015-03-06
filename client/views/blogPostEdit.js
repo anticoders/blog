@@ -16,7 +16,7 @@ Template.blogPostEdit.rendered = function () {
     stop: function(e, ui) {
       var indexAfterSort = ui.item.index();
       var chunkArray = BlogPosts.findOne({_id: that.data._id}, {reactive: false}).chunks;
-      Helpers.moveInArray(chunkArray, that.indexBeforeSort, indexAfterSort); //move element at new index in-place
+      Utils.moveInArray(chunkArray, that.indexBeforeSort, indexAfterSort); //move element at new index in-place
       BlogPosts.update({ _id: that.data._id }, { $set: { chunks: chunkArray } });
     }
   });
