@@ -4,8 +4,8 @@
     <h1>List of all blog posts.</h1>
   {{/contentFor}}
 
-  {{#breadcrumb items=$helpers.breadcrumb}}
-    {{#if $app.canEdit}}
+  {{#breadcrumb items=$.breadcrumb}}
+    {{#if canCreate}}
       <i class="right chevron icon divider"></i>
       <a class="section" href="#" data-action='create'>edit a new post <i class="ui write icon"></i></a>
     {{/if}}
@@ -32,16 +32,16 @@
           <a class="ui right floated small primary compact button" href="{{pathForThisPost}}" data-action="scrollTop">
             read more
           </a>
-          {{#if publishedAt}}
-            <a class="ui right floated small negative compact button" data-action="unpublish">
-              unpublish
-            </a>
-          {{else}}
-            <a class="ui right floated small positive compact button" data-action="publish">
-              publish
-            </a>
-          {{/if}}
-          {{#if $app.canEdit}}
+          {{#if canEdit}}
+            {{#if publishedAt}}
+              <a class="ui right floated small negative compact button" data-action="unpublish">
+                unpublish
+              </a>
+            {{else}}
+              <a class="ui right floated small positive compact button" data-action="publish">
+                publish
+              </a>
+            {{/if}}
             <a class="ui right floated small compact labeled icon button" href="{{pathFor 'blogPostEdit'}}" data-action="scrollTop">
               edit this post <i class="ui icon write"></i>
             </a>

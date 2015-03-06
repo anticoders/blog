@@ -13,8 +13,8 @@
     </div>
   {{/contentFor}}
 
-  {{#breadcrumb items=$helpers.breadcrumb}}
-    {{#if $app.canEdit}}
+  {{#breadcrumb items=$.breadcrumb}}
+    {{#if canEdit}}
       <i class="right chevron icon divider"></i>
       <a class="section" href="{{pathFor 'blogPostEdit'}}">edit</a>
     {{/if}}

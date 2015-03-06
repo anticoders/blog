@@ -19,18 +19,20 @@
       Login
     </a>
     {{else}}
-    <a class="item" data-action="create">
-      <i class="write icon"></i>
-      Write
-    </a>
-    <a class="item" href="{{pathFor 'profile'}}" data-action="toggle">
-      <i class="user icon"></i>
-      Profile
-    </a>
-    <a class="item" href="{{pathFor 'landingPage'}}" data-action="logout">
-      <i class="sign out icon"></i>
-      Logout
-    </a>
+      {{#if canCreate}}
+      <a class="item" data-action="create">
+        <i class="write icon"></i>
+        Write
+      </a>
+      {{/if}}
+      <a class="item" href="{{pathFor 'profile'}}" data-action="toggle">
+        <i class="user icon"></i>
+        Profile
+      </a>
+      <a class="item" href="{{pathFor 'landingPage'}}" data-action="logout">
+        <i class="sign out icon"></i>
+        Logout
+      </a>
     {{/unless}}
   </div>
 

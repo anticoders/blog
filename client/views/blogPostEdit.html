@@ -1,5 +1,5 @@
 <template name="blogPostEdit">
-  {{> breadcrumb items=$helpers.breadcrumb}}
+  {{> breadcrumb items=$.breadcrumb}}
 
   <div class="ui hidden divider"></div>
 
@@ -15,7 +15,7 @@
   {{/contentFor}}
 
   <div class="chunks-container">
-    {{#each $helpers.enumerated chunks}}
+    {{#each $.enumerated chunks}}
       {{> chunkEditor chunk=this blogPostId=../_id}}
     {{/each}}
   </div>
