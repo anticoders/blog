@@ -17,6 +17,6 @@ function anyoneLoggedIn(userId) {
   return !!userId;
 }
 
-function onlyTheOwner(userId, doc) {
-  return !!userId && doc.createdBy === userId;
+function onlyTheOwner(userId, blogPost) {
+  return Predicates.userIdCanEditBlogPost(userId, blogPost);
 }

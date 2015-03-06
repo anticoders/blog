@@ -15,3 +15,9 @@ Template.sidebar.events({
     });
   },
 });
+
+Template.sidebar.helpers({
+  canCreate: function () {
+    return Predicates.userIdCanCreateBlogPost(Meteor.userId());
+  },
+});

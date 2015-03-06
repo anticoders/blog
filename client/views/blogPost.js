@@ -13,4 +13,7 @@ Template.blogPost.helpers({
   image: function () {
     return this && this.getImageUrl && this.getImageUrl();
   },
+  canEdit: function () {
+    return Predicates.userIdCanEditBlogPost(Meteor.userId(), this);
+  },
 });

@@ -15,6 +15,12 @@ Template.blogList.helpers({
   image: function () {
     return this && this.getImageUrl && this.getImageUrl();
   },
+  canEdit: function () {
+    return Predicates.userIdCanEditBlogPost(Meteor.userId(), this);
+  },
+  canCreate: function () {
+    return Predicates.userIdCanCreateBlogPost(Meteor.userId());
+  },
   pathForThisPost: function () {
     if (this.slug && this.year) {
       return Router.path('published', this);
