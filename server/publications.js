@@ -7,28 +7,31 @@ Meteor.publish('blogPosts', function () {
   var self = this, handle;
 
   if (!self.userId) {
-
-    // pipe items from Published collection to client "blogPosts" sink
-
-    handle = Published.find({}).observeChanges({
-      added: function (id, fields) {
-        self.added('blogPosts', id, fields);
-      },
-      changed: function (id, fields) {
-        self.changed('blogPosts', id, fields);
-      },
-      removed: function (id) {
-        self.removed('blogPosts', id);
-      },
-    });
-
-    self.ready();
-
-    self.onStop(function () {
-      handle.stop();
-    });
-
+    // pump items from Published collection to client "blogPosts" sink
+    handle = pump(self, Published.find({}), 'blogPosts');
   } else {
-    return BlogPosts.find({});
+    handle = pump(self, blogPosts.find({}), 'blogPosts');
   }
+
+  self.onStop(function () {
+    handle.stop();
+  });
+
+  Meteor.setTimeout(function () {
+    self.ready();
+  }, 1000);
 });
+
+function pump(sub, cursor, name) {
+  return cursor.observeChanges({
+    added: function (id, fields) {
+      sub.added(name, id, fields);
+    },
+    changed: function (id, fields) {
+      sub.changed(name, id, fields);
+    },
+    removed: function (id) {
+      sub.removed(name, id);
+    },
+  });
+}
