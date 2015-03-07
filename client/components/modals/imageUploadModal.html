@@ -1,0 +1,25 @@
+
+<template name="imageUploadModal">
+  <div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+      So you want to upload these images?
+    </div>
+    <div class="content">
+      <div class="description">
+        {{#each listOfImages}}
+          
+        {{/each}}
+      </div>
+    </div>
+    <div class="actions">
+      <div class="ui black button">
+        Cancel
+      </div>
+      <div class="ui positive right labeled icon button">
+        Yep, do it
+        <i class="checkmark icon"></i>
+      </div>
+    </div>
+  </div>
+</template>

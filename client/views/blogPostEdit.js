@@ -9,7 +9,7 @@ Template.blogPostEdit.rendered = function () {
   this.$('.chunks-container').sortable({
     axis: 'y',
     handle: '.sort-chunk-handler',
-    items: '> .chunkEditor',
+    items: '> .chunk.editor',
     start: function(e, ui) {
       that.indexBeforeSort = ui.item.index();
     },

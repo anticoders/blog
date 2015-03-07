@@ -1,39 +1,80 @@
 Template.chunkEditor.rendered = function() {
-  var that = this;
-  var staticContent = this.data.chunk.content;
-  this.$('textarea').val(staticContent);
+
   var chunkType = this.data && this.data.chunk && this.data.chunk.type || 'text';
 
-  this.editorCodeMirror = CodeMirror.fromTextArea(this.find('textarea'),initMode(chunkType));
-  window.qweqwe = this.editorCodeMirror;
+  var editor  = CodeMirror(this.$('.chunk.editor')[0], initMode(chunkType));
+  var content = new ReactiveVar();
+
+  // watch changes of the current data context
+  this.autorun(function () {
+    content.set(Template.currentData().chunk.content);
+  });
+
+  // watch changes of the current chunk content
+  this.autorun(function () {
+    var doc = editor.getDoc(), cursor = null;
+    var value = content.get();
+
+    if (value === doc.getValue()) {
+      console.log('no need to update');
+      return;
+    }
+
+    // save the current cursor position
+    cursor = doc.getCursor();
+
+    doc.setValue(value);
+
+    // try to restore the cursor position
+    doc.setCursor(cursor);
+  });
+
+  this.editor = editor;
 };
 
 Template.chunkEditor.events({
   'keyup textarea': function (e, t) {
     var hint = App.getHintFunction();
     var updates = {};
-    var index = t.$('.chunkEditor').index();
+    var index = t.$('.chunk.editor').index();
     if (index === -1) {
       throw new Meteor.Error('chunk without an index may not be edited');
     }
     hint('saving ...');
-    updates['chunks.' + index + '.content'] = t.editorCodeMirror.getValue();
+    updates['chunks.' + index + '.content'] = t.editor.getValue();
     App.doUpdate(this.blogPostId, updates, function () {
+      console.log('done updating');
       hint('');
     });
   },
-  'dragover .chunkEditor': function (e, t) {
+
+  'dragover .chunk.editor': function (e, t) {
     e.originalEvent.dataTransfer.dropEffect = 'copy';
     e.preventDefault();
     return false;
   },
-  'drop .chunkEditor': function (e, t) {
+
+  'drop .chunk.editor': function (e, t) {
+
+    // prevent all default behavior
+    e.preventDefault();
+
     var blogPost = Template.parentData();
+    
     if (!blogPost) {
       throw new Meteor.Error('parentData for chunk editor should be a blog post');
     }
-    var listOfIds = addPlaceholders(e.originalEvent, this.blogPostId, this.chunk, t.$('textarea').val());
-    uploadImages(e.originalEvent, function (listOfResults) {
+
+    console.log('image dropped');
+
+    var listOfFiles = getListOfFiles(e.originalEvent);
+    var listOfIds   = addPlaceholders(listOfFiles, this.blogPostId, this.chunk, t.editor.getDoc().getValue());
+
+    App.modal('imageUploadModal', { files: listOfFiles }).then(function () {
+      console.log('modal done ...');
+    });
+
+    /*uploadImages(e.originalEvent, function (listOfResults) {
       var content = t.$('textarea').val();
       _.each(listOfIds, function (id, index) {
         if (listOfResults[index].value) {
@@ -44,8 +85,8 @@ Template.chunkEditor.events({
       });
       console.log('done uploading');
       console.log(listOfResults);
-    });
-    e.preventDefault();
+    });*/
+
     return false;
   },
   'click .chunk-remove': function(e, t){
@@ -53,7 +94,7 @@ Template.chunkEditor.events({
     if ( !confirm('Do you really want to remove selected chunk from database?') ) return false;
     var hint = App.getHintFunction();
     var chunkArray = BlogPosts.findOne({_id: this.blogPostId}, {reactive: false}).chunks;
-    var index = t.$('.chunkEditor').index();
+    var index = t.$('.chunk.editor').index();
     if (index === -1) {
       throw new Meteor.Error('chunk without an index may not be edited');
     }
@@ -68,14 +109,18 @@ Template.chunkEditor.events({
   }
 });
 
-var uploadImages = function (event, callback) {
-  var dt = event.dataTransfer;
+function getListOfFiles (event) {
+  var dt = event && event.dataTransfer;
   if (!dt || !dt.files) {
-    return callback && callback([]);
+    return [];
   }
+  return dt.files;
+}
+
+var uploadImages = function (listOfFiles, callback) {
   var listOfResults = [];
-  var pending = dt.files.length;
-  _.each(dt.files, function (file) {
+  var pending = listOfFiles.length;
+  _.each(listOfFiles, function (file) {
     var reader = new FileReader();
     reader.onload = function (e) {
       Meteor.call('uploadToS3', e.target.result, file.type, function (err, key) {
@@ -95,17 +140,13 @@ var uploadImages = function (event, callback) {
   });
 };
 
-var addPlaceholders = function (event, postId, chunk, content) {
-  var dt = event.dataTransfer;
-  if (!dt || !dt.files) {
-    return;
-  }
+var addPlaceholders = function (listOfFiles, postId, chunk, content) {
   var listOfIds = [];
   var updates = {};
   if (chunk.index === undefined) {
     throw new Meteor.Error('chunk without an index may not be edited');
   }
-  updates['chunks.' + chunk.index + '.content'] = content + '\n' + _.map(dt.files, function (file, index) {
+  updates['chunks.' + chunk.index + '.content'] = content + '\n' + _.map(listOfFiles, function (file, index) {
     var id = Random.id();
     listOfIds.push(id);
     return '![Uploading ' + id + '](/path/to/some/file)';
