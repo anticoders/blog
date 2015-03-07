@@ -22,12 +22,12 @@ Template.chunkEditor.events({
       hint('');
     });
   },
-  'dragover textarea': function (e, t) {
+  'dragover .chunkEditor': function (e, t) {
     e.originalEvent.dataTransfer.dropEffect = 'copy';
     e.preventDefault();
     return false;
   },
-  'drop textarea': function (e, t) {
+  'drop .chunkEditor': function (e, t) {
     var blogPost = Template.parentData();
     if (!blogPost) {
       throw new Meteor.Error('parentData for chunk editor should be a blog post');
@@ -114,19 +114,25 @@ var addPlaceholders = function (event, postId, chunk, content) {
   return listOfIds;
 };
 
-function initMode(type) {
-  if (type === 'text') return {
-    mode: 'null',
-    theme: 'default', //default, ambiance
-    lineWrapping: true,
-    lineNumbers: false,
-    addModeClass: true
+function initMode (type) {
+  var options = {
+    dragDrop: false
   };
-  else return {
-    mode: 'javascript',
-    theme: 'ambiance', //default, ambiance
-    lineWrapping: false,
-    lineNumbers: true,
-    addModeClass: false
-  };
+
+  if (type === 'text') {
+    options.mode = 'null';
+    options.theme = 'default'; // or ambiance
+    options.lineWrapping = true;
+    options.lineNumbers = false;
+    options.addModeClass = true;
+
+  } else if (type === 'javascript') {
+    options.mode = 'javascript';
+    options.theme = 'ambiance';
+    options.lineWrapping = false;
+    options.lineNumbers = true;
+    options.addModeClass = false;
+  }
+
+  return options;
 }
