@@ -1,6 +1,6 @@
 
 Template.body.rendered = function () {
-  this.$('body').addClass('pushable');
+  $('body').addClass('dimmable pushable');
 }
 
 Template.body.events({
