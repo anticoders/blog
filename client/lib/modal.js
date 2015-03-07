@@ -18,7 +18,7 @@ App.modal = function (name, data, options) {
     }, 1000);
   }
 
-  return view;
+  return view._modal.deferred = new $.Deferred();
 }
 
 App.modalNotifyRendered = function (node) {
@@ -26,8 +26,11 @@ App.modalNotifyRendered = function (node) {
   if (!view) {
     return;
   }
+
   $(node).modal(view._modal);
   $(node).modal('show');
+
+  return view._modal.deferred;
 }
 
 function findView() {
