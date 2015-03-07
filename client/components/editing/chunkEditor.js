@@ -16,7 +16,6 @@ Template.chunkEditor.rendered = function() {
     var value = content.get();
 
     if (value === doc.getValue()) {
-      console.log('no need to update');
       return;
     }
 
@@ -33,7 +32,7 @@ Template.chunkEditor.rendered = function() {
 };
 
 Template.chunkEditor.events({
-  'keyup textarea': function (e, t) {
+  'keyup .chunk.editor': function (e, t) {
     var hint = App.getHintFunction();
     var updates = {};
     var index = t.$('.chunk.editor').index();
@@ -47,7 +46,6 @@ Template.chunkEditor.events({
       hint('');
     });
   },
-
   'dragover .chunk.editor': function (e, t) {
     e.originalEvent.dataTransfer.dropEffect = 'copy';
     e.preventDefault();
@@ -64,8 +62,6 @@ Template.chunkEditor.events({
     if (!blogPost) {
       throw new Meteor.Error('parentData for chunk editor should be a blog post');
     }
-
-    console.log('image dropped');
 
     var listOfFiles = getListOfFiles(e.originalEvent);
     var listOfIds   = addPlaceholders(listOfFiles, this.blogPostId, this.chunk, t.editor.getDoc().getValue());

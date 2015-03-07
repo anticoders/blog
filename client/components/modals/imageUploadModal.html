@@ -7,8 +7,8 @@
     </div>
     <div class="content">
       <div class="description">
-        {{#each listOfImages}}
-          
+        {{#each $.enumerated listOfImages}}
+          <img src="" data-index="{{index}}">
         {{/each}}
       </div>
     </div>
@@ -17,7 +17,7 @@
         Cancel
       </div>
       <div class="ui positive right labeled icon button">
-        Yep, do it
+        Yes, please do it!
         <i class="checkmark icon"></i>
       </div>
     </div>
