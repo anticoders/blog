@@ -1,4 +1,4 @@
 
-Template.imageModal.rendered = function () {
+Template.errorModal.rendered = function () {
   App.modalNotifyRendered(this.$('.ui.modal'));
 }

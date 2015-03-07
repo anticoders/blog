@@ -21,7 +21,7 @@ App.modal = function (name, data, options) {
   return view;
 }
 
-App.showModal = function (node) {
+App.modalNotifyRendered = function (node) {
   var view = findView();
   if (!view) {
     return;

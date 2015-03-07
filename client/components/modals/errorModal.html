@@ -1,0 +1,25 @@
+<template name="errorModal">
+  <div class="ui basic modal">
+    <i class="close icon"></i>
+    <div class="header">
+      {{./title}}
+    </div>
+    <div class="content">
+      <div class="image">
+        <i class="bug icon"></i>
+      </div>
+      <div class="description">
+        <p>{{./description}}</p>
+        <code>{{./error.stack}}</code>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="ui fluid inverted buttons">
+        <div class="ui green basic inverted button">
+          <i class="checkmark icon"></i>
+          Ok
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
