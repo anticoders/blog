@@ -1,39 +1,54 @@
 
 App.modal = function (name, data, options) {
   
+  var deferred = new $.Deferred();
   var view = Blaze.renderWithData(Template[name], data, $('.ui.modals').get(0));
 
-  view._modal = options || {};
+  options = options || {};
 
-  var onHide = view._modal.onHide;
+  view._modal = _.extend({}, options); // do not overwrite the original object
 
-  view._modal.onHide = function () {
-    // first call the user provided callback
-    onHide && onHide.apply(this, arguments);
+  var events = [ 'onShow', 'onVisible', 'onHide', 'onHidden', 'onApprove', 'onDeny' ];
 
-    // wait until all animations are done
-    Meteor.setTimeout(function () {
-      // and finally destroy the view
-      Blaze.remove(view);
-    }, 1000);
-  }
+  _.each(events, function (name) {
+    view._modal[name] = function () {
 
-  return view._modal.deferred = new $.Deferred();
+      if (name === 'onHidden') {
+        Meteor.defer(function () {
+          Blaze.remove(view);
+        });
+      }
+
+      return options[name] && options[name].call(this, deferred);
+    }
+  });
+
+  return view._modal.deferred = deferred;
 }
 
 App.modalNotifyRendered = function (node, options) {
   var view = findView();
+
   if (!view) {
     return;
   }
 
   options = options || {};
 
-  $(node).modal(view._modal);
+  // allow the template to provide some defaults
+  _.defaults(view._modal, options);
 
-  if (!options.delayShow) {
+  $(node).modal(view._modal);
+  if (!options.dontShow) {
     $(node).modal('show');
   }
+
+  view._modal.deferred.always(function () {
+    Meteor.setTimeout(function () {
+      // we need this delay in case some other modal pops-up
+      $(node).modal('hide');
+    }, 50);
+  });
 
   return view._modal.deferred;
 }
