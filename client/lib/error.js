@@ -11,7 +11,7 @@ App.error = function (err, options) {
     data = err;
   }
 
-  if (!data.error) {
+  if (data.error === undefined) {
     data.error = new Error(data.description);
   }
 
