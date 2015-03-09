@@ -21,14 +21,19 @@ App.modal = function (name, data, options) {
   return view._modal.deferred = new $.Deferred();
 }
 
-App.modalNotifyRendered = function (node) {
+App.modalNotifyRendered = function (node, options) {
   var view = findView();
   if (!view) {
     return;
   }
 
+  options = options || {};
+
   $(node).modal(view._modal);
-  $(node).modal('show');
+
+  if (!options.delayShow) {
+    $(node).modal('show');
+  }
 
   return view._modal.deferred;
 }
