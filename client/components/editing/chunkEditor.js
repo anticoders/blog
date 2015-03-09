@@ -32,6 +32,7 @@ Template.chunkEditor.rendered = function() {
 };
 
 Template.chunkEditor.events({
+
   'keyup .chunk.editor': function (e, t) {
     var hint = App.getHintFunction();
     var updates = {};
@@ -42,10 +43,10 @@ Template.chunkEditor.events({
     hint('saving ...');
     updates['chunks.' + index + '.content'] = t.editor.getValue();
     App.doUpdate(this.blogPostId, updates, function () {
-      console.log('done updating');
       hint('');
     });
   },
+
   'dragover .chunk.editor': function (e, t) {
     e.originalEvent.dataTransfer.dropEffect = 'copy';
     e.preventDefault();
@@ -53,35 +54,56 @@ Template.chunkEditor.events({
   },
 
   'drop .chunk.editor': function (e, t) {
+    e.preventDefault(); // prevent all default actions
 
-    // prevent all default behavior
-    e.preventDefault();
-
-    var blogPost = Template.parentData();
-    
-    if (!blogPost) {
-      throw new Meteor.Error('parentData for chunk editor should be a blog post');
-    }
-
+    var blogPostId  = this.blogPostId;
     var listOfFiles = getListOfFiles(e.originalEvent);
     var listOfIds   = addPlaceholders(listOfFiles, this.blogPostId, this.chunk, t.editor.getDoc().getValue());
 
-    App.modal('imageUploadModal', { files: listOfFiles }).then(function () {
-      console.log('modal done ...');
-    });
+    App.modal('imageUploadModal', {
 
-    /*uploadImages(e.originalEvent, function (listOfResults) {
-      var content = t.$('textarea').val();
-      _.each(listOfIds, function (id, index) {
-        if (listOfResults[index].value) {
-          content.replace(new RegExp('\[Uploading ' + id + '\]\(.*\)'), 'Uploaded as ' + listOfResults[index].value);
-        } else {
-          content.replace(new RegExp('\[Uploading ' + id + '\]\(.*\)'), listOfResults[index].error.toString());
+      files: listOfFiles
+
+    }).done(function (listOfResults) {
+
+      var blogPost = BlogPosts.findOne({ _id: blogPostId });
+      var listOfErrors = [];
+      var updates = {};
+
+      _.each(listOfResults, function (result, index) {
+        var re = new RegExp('\!\\[Uploading ' + listOfIds[index] + '\\]\(.*\)', 'g');
+        if (result.error) {
+          listOfErrors.push({
+            name  : listOfFiles[index].name,
+            error : result.error,
+          });
+        }
+        if (result.value) {
+          // by replacing the content of all chunks, we get away with knowing the correct index
+          // (which may be problematic in some edge case scenarios)
+          _.each(blogPost.chunks, function (chunk) {
+            chunk.content = chunk.content.replace(re,
+              '![' + listOfFiles[index].name + '](' + Meteor.settings.public.s3uploadsPrefix + result.value + ')');
+          });
         }
       });
-      console.log('done uploading');
-      console.log(listOfResults);
-    });*/
+
+      // perform the update ...
+      BlogPosts.update({ _id: blogPostId }, { $set: { chunks: blogPost.chunks } });
+
+      if (listOfErrors.length > 0) {
+        App.error({
+          title       : 'Something went wrong with the upload',
+          description : 'The following files could not be uploaded:\n\n- ' + _.pluck(listOfErrors, 'name').join('\n- '),
+          //------------------------------------------------------------------------------------------------------------
+          error       : listOfErrors[0].error, // TODO: better error message
+        });
+      }
+
+    }).fail(function (err) {
+      console.log('strange');
+      App.error(err);
+    });
 
     return false;
   },
@@ -113,29 +135,6 @@ function getListOfFiles (event) {
   return dt.files;
 }
 
-var uploadImages = function (listOfFiles, callback) {
-  var listOfResults = [];
-  var pending = listOfFiles.length;
-  _.each(listOfFiles, function (file) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      Meteor.call('uploadToS3', e.target.result, file.type, function (err, key) {
-        pending -= 1;
-        if (err) {
-          App.error(err);
-          listOfResults.push({ error: err });
-        } else {
-          listOfResults.push({ value: key });
-        }
-        if (pending === 0) {
-          callback && callback(listOfResults);
-        }
-      });
-    };
-    reader.readAsBinaryString(file);
-  });
-};
-
 var addPlaceholders = function (listOfFiles, postId, chunk, content) {
   var listOfIds = [];
   var updates = {};
@@ -144,8 +143,9 @@ var addPlaceholders = function (listOfFiles, postId, chunk, content) {
   }
   updates['chunks.' + chunk.index + '.content'] = content + '\n' + _.map(listOfFiles, function (file, index) {
     var id = Random.id();
+    // TODO: use to original image size ...
     listOfIds.push(id);
-    return '![Uploading ' + id + '](/path/to/some/file)';
+    return '![Uploading ' + id + '](http://fakeimg.pl/350x200/282828/eeeeee?text=uploading ...)';
   }).join('\n');
   BlogPosts.update({ _id: postId }, { $set: updates });
   return listOfIds;

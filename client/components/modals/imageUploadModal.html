@@ -1,25 +1,32 @@
 
 <template name="imageUploadModal">
-  <div class="ui modal">
+  <div class="ui image upload modal">
     <i class="close icon"></i>
     <div class="header">
-      So you want to upload these images?
+      Do you want to upload all these images?
     </div>
     <div class="content">
-      <div class="description">
+      <div class="list of images">
         {{#each $.enumerated listOfImages}}
           <img src="" data-index="{{index}}">
         {{/each}}
       </div>
     </div>
     <div class="actions">
-      <div class="ui black button">
-        Cancel
-      </div>
-      <div class="ui positive right labeled icon button">
-        Yes, please do it!
-        <i class="checkmark icon"></i>
-      </div>
+      {{#if isWaiting}}
+        <div class="ui black right labeled icon button" data-action="cancel">
+          <i class="remove icon"></i>
+          Cancel
+        </div>
+        <div class="ui green right labeled icon button" data-action="upload">
+          Yes please!
+          <i class="checkmark icon"></i>
+        </div>
+      {{else}}
+        {{#if isUploading}}
+          <div class="ui green loading button">Loading</div>
+        {{/if}}
+      {{/if}}
     </div>
   </div>
 </template>
