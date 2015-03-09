@@ -37,7 +37,7 @@ Meteor.methods({
 
     s3.putObject({
       ACL         : 'public-read',
-      Key         : key,
+      Key         : (config.prefix ? config.prefix + '/' : '') + key,
       Body        : new Buffer(blob, 'binary'),
       ContentType : type,
       Metadata    : {
@@ -67,6 +67,7 @@ S3.configure = function (options) {
   config.accessKeyId     = options.accessKeyId;
   config.secretAccessKey = options.secretAccessKey;
   config.bucket          = options.bucket;
+  config.prefix          = options.prefix;
 
   configChanged = true;
 }
