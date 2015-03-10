@@ -10,6 +10,13 @@ Npm.depends({
 });
 
 Package.onUse(function (api) {
+
+  api.use([ 'mongo', 'livedata' ]);
+
+  api.addFiles([
+    'collections.js'
+  ]);
+
   api.addFiles([
     'uploader.js'
   ], 'server');

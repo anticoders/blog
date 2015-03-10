@@ -7,9 +7,37 @@ var config = {};
 var configChanged = false;
 
 Meteor.methods({
-  'uploadToS3': function (blob, type) {
+  'createS3upload': function (name, type, tags) {
 
-    if (configChanged) {    
+    check(name, String);
+    check(type, String);
+    check(tags, [ String ]);
+
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'You must be logged in to upload images');
+    }
+
+    return S3.uploads.insert({
+      createdBy : this.userId,
+      createdAt : moment().toDate(),
+      state     : 'waiting',
+      name      : name,
+      type      : type,
+      tags      : tags,
+    });
+  },
+
+  'uploadToS3': function (uploadId, blob) {
+
+    check(uploadId, String);
+
+    var upload = S3.uploads.findOne({ _id: uploadId });
+
+    if (!upload) {
+      throw new Error(404, 'Invalid uploadId');
+    }
+
+    if (configChanged) {
       s3 = new AWS.S3({
         accessKeyId     : config.accessKeyId,
         secretAccessKey : config.secretAccessKey,
@@ -33,13 +61,15 @@ Meteor.methods({
     }
 
     // TODO: use userId to customize the key
-    var key = Random.id();
+    var key = uploadId;
+
+    S3.uploads.update({ _id: uploadId }, { $set: { state: 'uploading' }});
 
     s3.putObject({
       ACL         : 'public-read',
       Key         : (config.prefix ? config.prefix + '/' : '') + key,
       Body        : new Buffer(blob, 'binary'),
-      ContentType : type,
+      ContentType : upload.type,
       Metadata    : {
         'createdAt'   : moment().format(),
         'description' : 'uploaded by ' + this.userId,
@@ -52,11 +82,13 @@ Meteor.methods({
       }
     });
 
-    return future.wait();
+    this.unblock();
+
+    future.wait();
+
+    S3.uploads.update({ _id: uploadId }, { $set: { state: 'done' }});
   },
 });
-
-S3 = {};
 
 S3.configure = function (options) {
 
@@ -76,3 +108,8 @@ S3.allow = function () {
   return true;
 }
 
+Meteor.publish('s3uploads', function (selector) {
+  selector = selector || {};
+  selector.createdBy = this.userId;
+  return S3.uploads.find(selector);
+});

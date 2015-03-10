@@ -47,8 +47,12 @@ Template.imageUploadModal.events({
     var self = this;
     t.state.set('uploading');
     Meteor.setTimeout(function () { // delay by 1/10 sec to let the UI update properly
-      uploadImages(self.files, t, function (results) {
-        t.modal.resolve(results);
+      uploadImages(self.files, self.IDs, t, function (error, value) {
+        if (error) {
+          t.modal.reject(error);
+        } else {
+          t.modal.resolve(value);
+        }
       });
     }, 100);
   },
@@ -57,22 +61,12 @@ Template.imageUploadModal.events({
   },
 });
 
-function uploadImages (listOfFiles, template, callback) {
-  var listOfResults = [];
-  var pending = listOfFiles.length;
-  _.each(listOfFiles, function (file, index) {
+function uploadImages (listOfFiles, listOfIDs, template, callback) {
+  App.all(listOfFiles, function (file, index, cb) {
     var data = template.$('img[data-index=' + index + ']').get(0).src.split(',')[1];
-    Meteor.call('uploadToS3', atob(data), file.type, function (err, key) {
-      pending -= 1;
-      if (err) {
-        listOfResults.push({ error: err });
-      } else {
-        listOfResults.push({ value: key });
-      }
-      if (pending === 0) {
-        callback && callback(listOfResults);
-      }
-    });
-  });
+    Meteor.call('uploadToS3', listOfIDs[index], atob(data), cb);
+  }).done(function () {
+    callback();
+  }).fail(callback);
 };
 

@@ -1,30 +1,24 @@
 
 App.modal = function (name, data, options) {
-  
   var deferred = new $.Deferred();
   var view = Blaze.renderWithData(Template[name], data, $('.ui.modals').get(0));
 
   options = options || {};
-
   view._modal = _.extend({}, options); // do not overwrite the original object
 
   var events = [ 'onShow', 'onVisible', 'onHide', 'onHidden', 'onApprove', 'onDeny' ];
 
   _.each(events, function (name) {
     view._modal[name] = function () {
-
       if (name === 'onHidden') {
         Meteor.defer(function () {
           Blaze.remove(view);
         });
       }
-
       return options[name] && options[name].call(this, deferred);
     }
   });
-
   view._modal.deferred = deferred;
-
   return deferred.promise();
 }
 
