@@ -1,5 +1,22 @@
 /* overwriting Semantic UI defaults */
 
+.overflow-x-hidden {
+  /*
+    on "the other browsers" setting this value on body does not have effect,
+    so we also need to apply it to the "document"
+  */
+  overflow-x: hidden;
+}
+
+.scrollable {
+  /* 
+     semantic-ui default on .pushable body is overflow-x: hidden,
+     which breakes the jquery "sortable" plugin badly; we need this
+     additional class to restore "overflow" when sidebar is hidden 
+  */
+  overflow: initial;
+}
+
 .pushable > .pusher {
   overflow: initial; /* fixes a BUG in FF */
 }
@@ -24,9 +41,4 @@
 .ui.bio.items > .item > .content > .description {
   border-radius: 50%;
   max-width: inherit;
-}
-
-/*******************************************/
-.chunks-container {
-  position: relative;
 }
