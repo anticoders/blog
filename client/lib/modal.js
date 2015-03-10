@@ -23,7 +23,9 @@ App.modal = function (name, data, options) {
     }
   });
 
-  return view._modal.deferred = deferred;
+  view._modal.deferred = deferred;
+
+  return deferred.promise();
 }
 
 App.modalNotifyRendered = function (node, options) {

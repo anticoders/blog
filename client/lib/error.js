@@ -18,5 +18,11 @@ App.error = function (err, options) {
   // log this error to console as well (e.g. Kadira will be able to see it)
   console.error(data.error);
 
-  App.modal('errorModal', data, options);
+  if (!options.onHide) {
+    options.onHide = function (deferred) {
+      deferred.resolve();
+    }
+  }
+
+  return App.modal('errorModal', data, options);
 };
