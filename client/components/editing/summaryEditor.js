@@ -7,12 +7,6 @@ Template.summaryEditor.rendered = function () {
 
 Template.summaryEditor.events({
   'keyup .summary-edit': function (e, t) {
-    var hint = App.getHintFunction();
-    var updates = {};
-    hint('saving ...');
-    updates['summary'] = $(e.target).html();
-    App.doUpdate(this._id, updates, function () {
-      hint('');
-    });
+    App.autosave(this._id, { $set: { summary: $(e.target).html() }});
   }
 });

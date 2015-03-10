@@ -19,7 +19,7 @@ Template.chunkEditor.rendered = function() {
     var index = self.$('.chunk.editor').index(), updates = {};
 
     updates['chunks.' + index + '.content'] = content;
-    BlogPosts.update({ _id: blogPostId }, { $set: updates });
+    App.autosave(blogPostId, { $set: updates });
 
     // update the editor
     var doc = editor.getDoc(), cursor = null;
@@ -40,7 +40,7 @@ Template.chunkEditor.rendered = function() {
       //---------------------------------------
       content = content.replace(re,
         '![' + fields.name + '](' + Meteor.settings.public.s3uploadsPrefix + id + ')');
-      
+
       self.update(content);
     }
   });
@@ -56,17 +56,7 @@ Template.chunkEditor.destroyed = function () {
 Template.chunkEditor.events({
 
   'keyup .chunk.editor': function (e, t) {
-    var hint = App.getHintFunction();
-    var updates = {};
-    var index = t.$('.chunk.editor').index();
-    if (index === -1) {
-      throw new Meteor.Error('chunk without an index may not be edited');
-    }
-    hint('saving ...');
-    updates['chunks.' + index + '.content'] = t.editor.getValue();
-    App.doUpdate(this.blogPostId, updates, function () {
-      hint('');
-    });
+    t.update(t.editor.getValue());
   },
 
   'dragover .chunk.editor': function (e, t) {

@@ -1,6 +1,11 @@
 
 App.getHintFunction = function () {
-  var controller = Iron.controller();
+  var controller;
+  try {
+    controller = Iron.controller();
+  } catch (err) {
+    return function () {};
+  }
   return function hint(text) {
     if (controller && controller.hint) {
       if (arguments.length > 0) {

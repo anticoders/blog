@@ -24,7 +24,8 @@ Template.blogPostEdit.rendered = function () {
       var indexAfterSort = ui.item.index();
       var chunkArray = BlogPosts.findOne({ _id: blogPostId }, {reactive: false}).chunks;
       Utils.moveInArray(chunkArray, indexBeforeSort, indexAfterSort);
-      BlogPosts.update({ _id: blogPostId }, { $set: { chunks: chunkArray } });
+      // TODO: make sure "hint" works here as well
+      App.autosave(blogPostId, { $set: { chunks: chunkArray } });
     },
   });
 
@@ -40,7 +41,7 @@ Template.blogPostEdit.events({
     var chunkToAdd = {
       type: 'text', content: ''
     };
-    BlogPosts.update({ _id: blogPostId }, { $push: { chunks: chunkToAdd } });
+    App.autosave(blogPostId, { $push: { chunks: chunkToAdd } });
     Blaze.renderWithData(Template.chunkEditor, {
       
       blogPostId : blogPostId,
@@ -61,7 +62,7 @@ Template.blogPostEdit.events({
       throw new Meteor.Error('array of chunks should exists for blog post');
     }
     chunkArray.splice(index, 1);
-    BlogPosts.update({ _id: this.blogPostId }, { $set: { chunks: chunkArray} });
+    App.autosave(this.blogPostId, { $set: { chunks: chunkArray} });
     Blaze.remove(Blaze.getView($editor[0]));
   },
 });
