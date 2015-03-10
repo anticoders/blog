@@ -136,14 +136,15 @@ Router.route('/edit/:_id', {
   where  : 'client',
   
   waitOn: function () {
-    return [
-       Meteor.subscribe('blogPosts'),
-       Meteor.subscribe('s3uploads'),
-    ];
+    return Meteor.subscribe('blogPosts');
   },
 
   onBeforeAction: function () {
     this.hint = new ReactiveVar("");
+
+    // no need to wait for this subscription
+    Meteor.subscribe('s3uploads');
+
     this.next();
   },
 
