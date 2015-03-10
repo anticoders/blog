@@ -145,7 +145,7 @@ Router.route('/edit/:_id', {
   },
 
   data: function () {
-    return BlogPosts.findOne({ _id: this.params._id });
+    return BlogPosts.findOne({ _id: this.params._id }, { reactive: false });
   },
 
   action: function () {

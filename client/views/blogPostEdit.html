@@ -15,9 +15,6 @@
   {{/contentFor}}
 
   <div class="chunks-container">
-    {{#each $.enumerated chunks}}
-      {{> chunkEditor chunk=this blogPostId=../_id}}
-    {{/each}}
   </div>
   <div class="ui labeled icon button positive" data-action="addChunk">
     <i class="add icon"></i>

@@ -2,33 +2,8 @@ Template.chunkEditor.rendered = function() {
 
   var chunkType = this.data && this.data.chunk && this.data.chunk.type || 'text';
 
-  var editor  = CodeMirror(this.$('.chunk.editor')[0], initMode(chunkType));
-  var content = new ReactiveVar();
-
-  // watch changes of the current data context
-  this.autorun(function () {
-    content.set(Template.currentData().chunk.content);
-  });
-
-  // watch changes of the current chunk content
-  this.autorun(function () {
-    var doc = editor.getDoc(), cursor = null;
-    var value = content.get();
-
-    if (value === doc.getValue()) {
-      return;
-    }
-
-    // save the current cursor position
-    cursor = doc.getCursor();
-
-    doc.setValue(value);
-
-    // try to restore the cursor position
-    doc.setCursor(cursor);
-  });
-
-  this.editor = editor;
+  this.editor = CodeMirror(this.$('.chunk.editor')[0], initMode(chunkType));
+  this.editor.getDoc().setValue(this.data.chunk.content);
 };
 
 Template.chunkEditor.events({
@@ -101,30 +76,11 @@ Template.chunkEditor.events({
       }
 
     }).fail(function (err) {
-      console.log('strange');
       App.error(err);
     });
 
     return false;
   },
-  'click .chunk-remove': function(e, t){
-    //TODO: display nice modal
-    if ( !confirm('Do you really want to remove selected chunk from database?') ) return false;
-    var hint = App.getHintFunction();
-    var chunkArray = BlogPosts.findOne({_id: this.blogPostId}, {reactive: false}).chunks;
-    var index = t.$('.chunk.editor').index();
-    if (index === -1) {
-      throw new Meteor.Error('chunk without an index may not be edited');
-    }
-    if (!chunkArray) {
-      throw new Meteor.Error('array of chunks should exists for blog post');
-    }
-    hint('saving ...');
-    chunkArray.splice(index, 1); //removes chunk from array
-    BlogPosts.update({ _id: this.blogPostId }, { $set: { chunks: chunkArray} }, function () {
-      hint('');
-    });
-  }
 });
 
 function getListOfFiles (event) {
@@ -172,4 +128,20 @@ function initMode (type) {
   }
 
   return options;
+}
+
+function setValueAndKeepCursor (editor, value) {
+  var doc = editor.getDoc(), cursor = null;
+
+  if (value === doc.getValue()) {
+    return;
+  }
+
+  // save the current cursor position
+  cursor = doc.getCursor();
+
+  doc.setValue(value);
+
+  // try to restore the cursor position
+  doc.setCursor(cursor);
 }
