@@ -17,9 +17,9 @@ Meteor.startup(function () {
     var maleOrFemale = Fake.fromArray([ 'male', 'female' ]);
 
     usersIds[index] = Accounts.createUser({
-      username : 'fake_' + index,
+      username : 'example' + index,
       password : 'password',
-      email    : 'fake_' + index + '@example',
+      email    : 'example' + index + '@example',
       profile  : {
         avatarUrl : Accounts.getRandomAvatarUrl(maleOrFemale),
         joinedAt  : moment().toDate(),
