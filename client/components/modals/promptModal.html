@@ -1,0 +1,28 @@
+
+<template name="promptModal">
+  <div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+      We need you to think twice before we can continue ...
+    </div>
+    <div class="content">
+      <div class="image">
+        <i class="warning sign icon"></i>
+      </div>
+      <div class="description">
+        <div class="ui header">... it would be nice if you could answer this question:</div>
+        <p>{{./question}}</p>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="ui black right labeled icon button">
+        No
+        <i class="remove icon"></i>
+      </div>
+      <div class="ui positive right labeled icon button">
+        Yes
+        <i class="checkmark icon"></i>
+      </div>
+    </div>
+  </div>
+</template>

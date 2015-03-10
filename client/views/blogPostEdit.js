@@ -50,19 +50,22 @@ Template.blogPostEdit.events({
     }, t.$('.chunks-container').get(0), t.view);
   },
   'click [data-action=removeChunk]': function(e, t) {
-    // TODO: display nice modal
-    if ( !confirm('Do you really want to remove selected chunk from database?') ) return false;
-    var $editor = $(e.target).closest('.chunk.editor');
-    var chunkArray = BlogPosts.findOne({_id: this.blogPostId}, { reactive: false }).chunks;
-    var index = $editor.index();
-    if (index === -1) {
-      throw new Meteor.Error('chunk without an index may not be edited');
-    }
-    if (!chunkArray) {
-      throw new Meteor.Error('array of chunks should exists for blog post');
-    }
-    chunkArray.splice(index, 1);
-    App.autosave(this.blogPostId, { $set: { chunks: chunkArray} });
-    Blaze.remove(Blaze.getView($editor[0]));
+    var blogPostId = this.blogPostId;
+    App.prompt({
+      question: 'Do you really want to remove selected chunk from database?',
+    }).done(function () {
+      var $editor = $(e.target).closest('.chunk.editor');
+      var chunkArray = BlogPosts.findOne({_id: blogPostId}, { reactive: false }).chunks;
+      var index = $editor.index();
+      if (index === -1) {
+        throw new Meteor.Error('chunk without an index may not be edited');
+      }
+      if (!chunkArray) {
+        throw new Meteor.Error('array of chunks should exists for blog post');
+      }
+      chunkArray.splice(index, 1);
+      App.autosave(blogPostId, { $set: { chunks: chunkArray} });
+      Blaze.remove(Blaze.getView($editor[0]));
+    });
   },
 });
