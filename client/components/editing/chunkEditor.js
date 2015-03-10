@@ -1,3 +1,5 @@
+"use strict";
+
 Template.chunkEditor.rendered = function() {
 
   var chunkType  = this.data && this.data.chunk && this.data.chunk.type || 'text';
@@ -5,27 +7,46 @@ Template.chunkEditor.rendered = function() {
   var editor     = CodeMirror(this.$('.chunk.editor')[0], initMode(chunkType));
   var self       = this;
 
-  this.editor = editor;
-  this.editor.getDoc().setValue(this.data.chunk.content);
+  // initialize editor with the current chunk value
+  editor.getDoc().setValue(this.data.chunk.content);
 
+  /**
+   * Update chunk content in both editor and database.
+   * @param {string} content
+   */
+  this.update = function update (content) {
+    // update database
+    var index = self.$('.chunk.editor').index(), updates = {};
+
+    updates['chunks.' + index + '.content'] = content;
+    BlogPosts.update({ _id: blogPostId }, { $set: updates });
+
+    // update the editor
+    var doc = editor.getDoc(), cursor = null;
+
+    if (content === doc.getValue()) {
+      return;
+    }
+    cursor = doc.getCursor();
+    doc.setValue(content);
+    doc.setCursor(cursor);
+  };
+
+  // an observer to watch the status of currently uploaded documents
   this.uploads = S3.uploads.find({ state: 'done', tags: 'blogPostId:' + blogPostId }).observeChanges({
     added: function (id, fields) {
-
       var re = new RegExp('\!\\[Uploading ' + id + '\\]\(.*\)', 'g');
       var content = editor.getDoc().getValue();
-
-      content = content.replace(re, '![' + fields.name + '](' + Meteor.settings.public.s3uploadsPrefix + id + ')');
-
-      var index = self.$('.chunk.editor').index();
-      var updates = {};
-
-      // perform all updates
-      updates['chunks.' + index + '.content'] = content;
-      BlogPosts.update({ _id: blogPostId }, { $set: updates });
-      setValueAndKeepCursor(editor, content);
+      //---------------------------------------
+      content = content.replace(re,
+        '![' + fields.name + '](' + Meteor.settings.public.s3uploadsPrefix + id + ')');
+      
+      self.update(content);
     }
   });
 
+  // make the editor accesible for the others
+  this.editor = editor;
 };
 
 Template.chunkEditor.destroyed = function () {
@@ -67,7 +88,7 @@ Template.chunkEditor.events({
         IDs   : listOfIds,
       }).done(function (results) {
         // display some message?
-        
+
       }).fail(function (err) {
         App.error(err);
       });
@@ -78,6 +99,9 @@ Template.chunkEditor.events({
   },
 });
 
+/**
+ * Safely extract the list of files from the given drop event.
+ */
 function getListOfFiles (event) {
   var dt = event && event.dataTransfer;
   if (!dt || !dt.files) {
@@ -86,27 +110,25 @@ function getListOfFiles (event) {
   return dt.files;
 }
 
-var addPlaceholders = function (listOfFiles, blogPostId, template, cb) {
+/**
+ * Initialize uploads and put placeholders into the chunk content.
+ */
+function addPlaceholders (listOfFiles, blogPostId, template, cb) {
 
   App.all(listOfFiles, function (file, cb) {
     Meteor.call('createS3upload', file.name, file.type, [ 'blogPostId:' + blogPostId ], cb);
 
   }).done(function (listOfIds) {
 
-    var editor  = template.editor;
     var index   = template.$('.chunk.editor').index();
-    var updates = {};
-    var content = editor.getDoc().getValue();
+    var content = template.editor.getDoc().getValue();
 
     content += '\n' + _.map(listOfIds, function (id) {
       // TODO: use to original image size ...
       return '![Uploading ' + id + '](http://fakeimg.pl/350x200/282828/eeeeee?text=uploading ...)';
     }).join('\n');
 
-    // perform all updates
-    updates['chunks.' + index + '.content'] = content;
-    BlogPosts.update({ _id: blogPostId }, { $set: updates });
-    setValueAndKeepCursor(editor, content);
+    template.update(content);
 
     cb(null, listOfIds);
 
@@ -140,18 +162,3 @@ function initMode (type) {
   return options;
 }
 
-function setValueAndKeepCursor (editor, value) {
-  var doc = editor.getDoc(), cursor = null;
-
-  if (value === doc.getValue()) {
-    return;
-  }
-
-  // save the current cursor position
-  cursor = doc.getCursor();
-
-  doc.setValue(value);
-
-  // try to restore the cursor position
-  doc.setCursor(cursor);
-}

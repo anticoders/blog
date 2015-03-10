@@ -1,11 +1,22 @@
-
-App.all = function (array, options, perform) {
+/**
+ * Transform an array into a set of asynchronous jobs to be
+ * performed in parallel.
+ *
+ * @param   {Array}    array - the array to be transformed
+ * @param   {Object}   options - an object containing options
+ * @param   {Number}   options.parallel - the maximum number of jobs that can run in parallel, if zero is passed, there will be no restriction
+ * @param   {Function} transform - a function to be called for each element of array; it will receive: element, index (optional) and callback
+ * @returns {Object}   a promise which will be resolved or rejected when all jobs are done
+ */
+App.all = function (array, options, transform) {
+  "use strict";
 
   if (typeof options === 'function') {
-    perform = options; options = {};
+    transform = options; options = {};
   }
 
   var deferred = new $.Deferred;
+  
   var pending  = array.length;
   var working  = 0;
   var maximum  = 4;
@@ -29,7 +40,7 @@ App.all = function (array, options, perform) {
 
     var args = [ array[current] ];
 
-    if (perform.length >= 3) {
+    if (transform.length >= 3) {
       args.push(current);
     }
 
@@ -60,7 +71,7 @@ App.all = function (array, options, perform) {
       })(current)
     );
 
-    perform.apply({}, args);
+    transform.apply({}, args);
     current += 1;
     return true;
   }

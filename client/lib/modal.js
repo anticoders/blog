@@ -1,5 +1,7 @@
 
 App.modal = function (name, data, options) {
+  "use strict";
+
   var deferred = new $.Deferred();
   var view = Blaze.renderWithData(Template[name], data, $('.ui.modals').get(0));
 
@@ -23,6 +25,8 @@ App.modal = function (name, data, options) {
 }
 
 App.modalNotifyRendered = function (node, options) {
+  "use strict";
+
   var view = findView();
 
   if (!view) {
@@ -50,6 +54,8 @@ App.modalNotifyRendered = function (node, options) {
 }
 
 function findView() {
+  "use strict";
+
   var view = Blaze.currentView;
   while (view) {
     if (view) {
