@@ -35,7 +35,8 @@ Template.blogPostEdit.destroyed = function () {
 };
 
 Template.blogPostEdit.events({
-  'click [data-action=addChunk]': function(e, t) {
+
+  'click [data-action=create]': function(e, t) {
     var blogPostId = t.data._id;
     var chunkToAdd = {
       type: 'text', content: ''
@@ -48,8 +49,9 @@ Template.blogPostEdit.events({
 
     }, t.$('.chunks.container').get(0), t.view);
   },
-  'click [data-action=removeChunk]': function(e, t) {
-    var blogPostId = this.blogPostId;
+
+  'click [data-action=remove]': function(e, t) {
+    var blogPostId = t.data._id;
     App.prompt({
       question: 'Do you really want to remove selected chunk from database?',
     }).done(function () {
@@ -67,4 +69,22 @@ Template.blogPostEdit.events({
       Blaze.remove(Blaze.getView($editor[0]));
     });
   },
+
+  'click [data-action=copy]': function (e, t) {
+    var blogPostId = t.data._id;
+    var $container = t.$('.chunks.container');
+    var $editor    = $(e.target).closest('.chunk.editor');
+    var chunks     = BlogPosts.findOne({ _id: blogPostId }, { reactive: false }).chunks;
+    var index      = $editor.index();
+
+    // copy the selected chunk
+    chunks.splice(index, 0, chunks[index]);
+
+    // save to database
+    App.autosave(blogPostId, { $set: { chunks: chunks } });
+
+    // create and append a new editor
+    Blaze.renderWithData(Template.chunkEditor, { blogPostId: blogPostId, chunk: chunks[index] }, $container[0], $editor.next()[0], t.view);
+  },
 });
+
