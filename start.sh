@@ -1,18 +1,22 @@
-TARGET=${1:-develop}
+TARGET=${1:-default}
 
 case $TARGET in
-  "develop")
-    echo "///////////////////////////////////////"
-    echo "// running with development settings //"
-    echo "///////////////////////////////////////"
+  "default")
+    echo "-----------------------------------"
+    echo "|| running with default settings ||"
+    echo "-----------------------------------"
     ;;
   *)
-    echo "wrong target"
-    echo "must be either develop or staging"
-    exit 1
+    if [ -f config/$TARGET.json ]
+    then
+      echo "----------------------------------"
+      echo "|| running with custom settings ||"
+      echo "----------------------------------"
+    else
+      echo "wrong target; file config/${TARGET}.json does not exist"
+      exit 1
+    fi
     ;;
 esac
 
 meteor --settings config/$TARGET.json
-
-
