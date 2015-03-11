@@ -1,29 +1,53 @@
 .chunk.editor {
-  position: relative;
 
-  .sort-chunk-handler {
-    position: absolute;
-    right: 100%;
-    opacity: 0;
+  position : relative;
+
+  .resizable {
+    position: relative;
+  }
+
+  .left.toolbar {
+    position   : absolute;
+    opacity    : 0;
+    left       : auto;
+    top        : 0;
+    bottom     : 0;
+    right      : 100%;
+    text-align : right;
+
+    > .buttons {
+      margin-right : 0;
+      margin-top   : 0; 
+    }
+    
+    > .buttons > .button {
+      margin-right : 0;
+      margin-top   : 0;
+      font-size    : 0.85em; 
+    }    
+  }
+
+  .move.chunk.button {
     cursor: move;
   }
 
-  .ui.button.negative {
-    position: absolute;
-    left: 100%;
-    opacity: 0;
-  }
-
-  textarea {
-    width: 100%;
-    height: 10em;
-    border: 0;
+  .resize.chunk.button {
+    position : absolute;
+    opacity  : 0;
+    cursor   : ew-resize;
+    right    : -10px;
+    top      : 0;
+    bottom   : 0;
+    left     : 100%;
   }
 
   .CodeMirror {
     width: 100%;
     height: 100%;
-    margin: 10px 0;
+  }
+
+  .CodeMirror-scroll {
+    min-height: 8em;
   }
 
   //default font family for non code editor
@@ -33,8 +57,8 @@
 
   &:hover {
 
-    .sort-chunk-handler,
-    .ui.button.negative {
+    .left.toolbar,
+    .resize.chunk.button {
       opacity: 0.9;
 
       &:hover {

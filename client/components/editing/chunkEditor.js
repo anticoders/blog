@@ -4,8 +4,29 @@ Template.chunkEditor.rendered = function() {
 
   var chunkType  = this.data && this.data.chunk && this.data.chunk.type || 'text';
   var blogPostId = this.data.blogPostId;
-  var editor     = CodeMirror(this.$('.chunk.editor')[0], initMode(chunkType));
+  var editor     = CodeMirror(this.$('.chunk.editor > .resizable')[0], initMode(chunkType));
   var self       = this;
+  var $wrapper   = this.$('.chunk.editor'); 
+  var $grid      = $wrapper.closest('.ui.grid');
+
+  this.$('.chunk.editor > .resizable').resizable({
+    grid    : [ 1, 1000 ], // find a better way to block vertical movement
+    handles : {
+      e: '.ui.resize.button'
+    },
+    resize  : function (e, ui) {
+      var width = Math.ceil(16 * ui.size.width / $grid.width());
+      if (width < 1) {
+        width = 1;
+      }
+      if (width > 16) {
+        width = 16;
+      }
+      $wrapper[0].className = $wrapper[0].className.replace(/\w+ wide column/, wordify(width) + ' wide column');
+      ui.element.css('width', '').css('height', '');
+      editor.refresh();
+    },
+  });
 
   // initialize editor with the current chunk value
   editor.getDoc().setValue(this.data.chunk.content);
@@ -150,5 +171,33 @@ function initMode (type) {
   }
 
   return options;
+}
+
+var words = [
+  'zero',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'eleven',
+  'twelve',
+  'thirteen',
+  'fourteen',
+  'fifteen',
+  'sixteen',
+  'seventeen',
+  'eighteen',
+  'nineteen',
+  'twenty',
+];
+
+function wordify(number) {
+  return words[number];
 }
 

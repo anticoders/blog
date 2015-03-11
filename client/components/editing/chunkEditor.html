@@ -1,10 +1,24 @@
 <template name="chunkEditor">
-  <div class="chunk editor chunk-type-{{type}}">
-    <div class="ui compact icon button sort-chunk-handler">
-      <i class="move icon"></i>
-    </div>
-    <div class="ui compact icon button negative" data-action="removeChunk">
-      <i class="close icon"></i>
+  <div class="sixteen wide column chunk editor chunk-type-{{./chunk.type}}">
+    <div class="resizable">
+      <div class="left toolbar">
+        <div class="ui vertical buttons">        
+          <div class="ui compact icon move chunk button">
+            <i class="move icon"></i>
+          </div>
+          <div class="ui compact icon chunk button" data-action="">
+            <i class="compress icon"></i>
+          </div>
+          <div class="ui compact icon chunk button" data-action="">
+            <i class="content icon"></i>
+          </div>
+          <div class="ui compact icon remove chunk button" data-action="removeChunk">
+            <i class="close icon"></i>
+          </div>
+        </div>
+      </div>
+      <div class="ui compact icon resize chunk button ui-resizable-handle ui-resizable-horizontal">
+      </div>
     </div>
   </div>
 </template>

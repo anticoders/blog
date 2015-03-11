@@ -5,7 +5,7 @@ Template.blogPostEdit.rendered = function () {
   var blogPostId = this.data._id;
   var indexBeforeSort = 0;
   var parentView = this.view;
-  var $container = this.$('.chunks-container');
+  var $container = this.$('.chunks.container');
 
   // insert corresponding chunk editors to the DOM tree
   _.each(this.data.chunks, function (chunk) {
@@ -14,8 +14,7 @@ Template.blogPostEdit.rendered = function () {
 
   // init sortable plugin with sort events
   $container.sortable({
-    axis: 'y',
-    handle: '.sort-chunk-handler',
+    handle: '.move.chunk.button',
     items: '> .chunk.editor',
     start: function(e, ui) {
       indexBeforeSort = ui.item.index();
@@ -32,7 +31,7 @@ Template.blogPostEdit.rendered = function () {
 };
 
 Template.blogPostEdit.destroyed = function () {
-  this.$('.chunks-container').sortable('destroy');
+  this.$('.chunks.container').sortable('destroy');
 };
 
 Template.blogPostEdit.events({
@@ -47,7 +46,7 @@ Template.blogPostEdit.events({
       blogPostId : blogPostId,
       chunk      : chunkToAdd
 
-    }, t.$('.chunks-container').get(0), t.view);
+    }, t.$('.chunks.container').get(0), t.view);
   },
   'click [data-action=removeChunk]': function(e, t) {
     var blogPostId = this.blogPostId;

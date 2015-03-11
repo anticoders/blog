@@ -3,8 +3,6 @@
 
   <div class="ui hidden divider"></div>
 
-  {{> publishButton}}
-
   {{#contentFor 'header'}}
     <div class="ui grid">
       <div class="thirteen wide column">
@@ -14,10 +12,15 @@
     </div>
   {{/contentFor}}
 
-  <div class="chunks-container">
+  <p>{{> publishButton}}</p>
+
+  <div class="ui grid chunks container">
   </div>
-  <div class="ui labeled icon button positive" data-action="addChunk">
-    <i class="add icon"></i>
-    Add new chunk
-  </div>
+
+  <p>
+    <button class="ui labeled icon button positive" data-action="addChunk">
+      <i class="add icon"></i>
+      Add new chunk
+    </button>
+  </p>
 </template>
