@@ -33,6 +33,7 @@ iron:middleware-stack@1.0.7
 iron:router@1.0.7
 iron:url@1.0.7
 jquery@1.11.3
+jqueryui@1.11.3
 json@1.0.2
 launch-screen@1.0.1
 less@1.0.12
@@ -47,7 +48,6 @@ minimongo@1.0.6
 mobile-status-bar@1.0.2
 momentjs:moment@2.9.0
 mongo@1.0.11
-mrt:jquery-ui-sortable@1.10.3
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4
 ordered-dict@1.0.2
