@@ -15,16 +15,18 @@ Template.chunkEditor.rendered = function() {
       e: '.ui.resize.button'
     },
     resize  : function (e, ui) {
-      var width = Math.ceil(16 * ui.size.width / $grid.width());
-      if (width < 1) {
-        width = 1;
-      }
-      if (width > 16) {
-        width = 16;
-      }
-      $wrapper[0].className = $wrapper[0].className.replace(/\w+ wide column/, wordify(width) + ' wide column');
+      var size = Math.ceil(16 * ui.size.width / $grid.width());
+
+      if (size < 1)  { size = 1; }
+      if (size > 16) { size = 16; }
+      
+      // update the editor
+      $wrapper[0].className = $wrapper[0].className.replace(/\w+ wide column/, Utils.wordify(size) + ' wide column');
       ui.element.css('width', '').css('height', '');
       editor.refresh();
+
+      // save to the database ...
+      self.update('size', size);
     },
   });
 
@@ -33,24 +35,35 @@ Template.chunkEditor.rendered = function() {
 
   /**
    * Update chunk content in both editor and database.
-   * @param {string} content
+   * @param {string} what should we update?
+   * @param {string} what value we should assign?
    */
-  this.update = function update (content) {
+  this.update = function update (what, value) {
     // update database
-    var index = self.$('.chunk.editor').index(), updates = {};
 
-    updates['chunks.' + index + '.content'] = content;
+    if (arguments.length < 2) {
+      value = what; what = 'content';
+    }
+
+    var index   = self.$('.chunk.editor').index();
+    var updates = {};
+    var cursor  = null;
+    var doc     = null;
+
+    updates['chunks.' + index + '.' + what] = value;
     App.autosave(blogPostId, { $set: updates });
 
-    // update the editor
-    var doc = editor.getDoc(), cursor = null;
-
-    if (content === doc.getValue()) {
-      return;
+    if (what === 'content') {
+      // update the editor
+      doc = editor.getDoc();
+      if (value === doc.getValue()) {
+        return;
+      }
+      cursor = doc.getCursor();
+      doc.setValue(value);
+      doc.setCursor(value);
     }
-    cursor = doc.getCursor();
-    doc.setValue(content);
-    doc.setCursor(cursor);
+
   };
 
   // an observer to watch the status of currently uploaded documents
@@ -73,6 +86,12 @@ Template.chunkEditor.rendered = function() {
 Template.chunkEditor.destroyed = function () {
   this.uploads.stop();
 }
+
+Template.chunkEditor.helpers({
+  column: function () {
+    return Utils.wordify(this.chunk.size || 16) + ' wide column';
+  },
+});
 
 Template.chunkEditor.events({
 
@@ -171,33 +190,5 @@ function initMode (type) {
   }
 
   return options;
-}
-
-var words = [
-  'zero',
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six',
-  'seven',
-  'eight',
-  'nine',
-  'ten',
-  'eleven',
-  'twelve',
-  'thirteen',
-  'fourteen',
-  'fifteen',
-  'sixteen',
-  'seventeen',
-  'eighteen',
-  'nineteen',
-  'twenty',
-];
-
-function wordify(number) {
-  return words[number];
 }
 

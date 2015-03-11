@@ -1,10 +1,3 @@
-Template.blogPost.rendered = function () {
-
-};
-
-Template.blogPost.created = function () {
-
-};
 
 Template.blogPost.helpers({
   title: function () {
@@ -15,5 +8,8 @@ Template.blogPost.helpers({
   },
   canEdit: function () {
     return Predicates.userIdCanEditBlogPost(Meteor.userId(), this);
+  },
+  column: function () {
+    return Utils.wordify(this.size || 16) + ' wide column';
   },
 });

@@ -20,11 +20,13 @@
     {{/if}}
   {{/breadcrumb}}
 
+  <div class="ui stackable grid posts">
   {{#each chunks}}
-  <div class="ui blog post chunk">
+  <div class="{{column}} blog post chunk">
 {{#markdown}}{{content}}{{/markdown}}
   </div>
   {{/each}}
+  </div>
 
   <div class="ui divider"></div>
   <small>{{./getAuthorInfo}}</small>
