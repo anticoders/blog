@@ -6,24 +6,24 @@
     position: relative;
   }
 
-  .left.toolbar {
+  .toolbar {
     position   : absolute;
     opacity    : 0;
-    left       : auto;
-    top        : 0;
-    bottom     : 0;
-    right      : 100%;
-    text-align : right;
+    left       : 0;
+    top        : auto;
+    bottom     : 100%;
+    right      : auto;
+    text-align : left;
 
     > .buttons {
-      margin-right : 0;
-      margin-top   : 0; 
+      margin-left   : 0;
+      margin-bottom : 0; 
     }
     
     > .buttons > .button {
-      margin-right : 0;
-      margin-top   : 0;
-      font-size    : 0.85em; 
+      margin-left   : 0;
+      margin-bottom : 0;
+      font-size     : 0.7em; 
     }    
   }
 
@@ -57,7 +57,7 @@
 
   &:hover {
 
-    .left.toolbar,
+    .toolbar,
     .resize.chunk.button {
       opacity: 0.9;
 
