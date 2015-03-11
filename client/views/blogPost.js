@@ -12,4 +12,7 @@ Template.blogPost.helpers({
   column: function () {
     return Utils.wordify(this.size || 16) + ' wide column';
   },
+  highlight: function (code) {
+    return new Spacebars.SafeString(hljs.highlightAuto(code).value);
+  },
 });

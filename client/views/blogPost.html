@@ -22,9 +22,29 @@
 
   <div class="ui stackable grid posts">
   {{#each chunks}}
-  <div class="{{column}} blog post chunk">
-{{#markdown}}{{content}}{{/markdown}}
-  </div>
+    <div class="{{column}} blog post chunk">
+    {{#switch ./type}}
+      {{#case 'text'}}
+{{#markdown}}
+{{./content}}
+{{/markdown}}
+      {{/case}}
+      {{#case 'code'}}
+<pre>
+  <code>
+{{highlight ./content}}
+  </code>
+</pre>
+      {{/case}}
+      {{#case 'math'}}
+{{#mathjax}}
+{{#markdown}}
+{{./content}}
+{{/markdown}}
+{{/mathjax}}
+      {{/case}}
+    {{/switch}}
+    </div>
   {{/each}}
   </div>
 
