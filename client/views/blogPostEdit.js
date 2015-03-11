@@ -36,11 +36,18 @@ Template.blogPostEdit.destroyed = function () {
 
 Template.blogPostEdit.events({
 
-  'click [data-action=create]': function(e, t) {
+  'add.chunk': function(e, t, type) {
     var blogPostId = t.data._id;
+
+    if (!type) {
+      // TODO: notify user
+      return;
+    }
+
     var chunkToAdd = {
-      type: 'text', content: ''
+      type: type, content: ''
     };
+
     App.autosave(blogPostId, { $push: { chunks: chunkToAdd } });
     Blaze.renderWithData(Template.chunkEditor, {
       
