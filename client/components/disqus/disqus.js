@@ -14,9 +14,10 @@ Template.disqus.rendered = function () {
   //var parentData = Template.parentData(1);
   //window.disqus_title = parentData.title;
 };
+var disqus_shortname = 'anticodersblog';
 
 DISQUS_LOADER = function() {
   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-  dsq.src = '//' + 'anticodersblog' + '.disqus.com/embed.js';
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 };
