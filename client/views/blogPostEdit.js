@@ -9,6 +9,9 @@ Template.blogPostEdit.rendered = function () {
 
   // insert corresponding chunk editors to the DOM tree
   _.each(this.data.chunks, function (chunk) {
+    if (!chunk) {
+      chunk = { type: 'text', content: '[broken chunk]' };
+    }
     Blaze.renderWithData(Template.chunkEditor, { blogPostId: blogPostId, chunk: chunk }, $container[0], parentView);
   });
 

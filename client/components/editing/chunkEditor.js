@@ -73,7 +73,7 @@ Template.chunkEditor.rendered = function() {
       var content = editor.getDoc().getValue();
       //---------------------------------------
       content = content.replace(re,
-        '![' + fields.name + '](' + Meteor.settings.public.s3uploadsPrefix + id + ')');
+        '![' + fields.name + '](' + Settings('public.s3uploadsPrefix') + id + ')');
 
       self.update(content);
     }
